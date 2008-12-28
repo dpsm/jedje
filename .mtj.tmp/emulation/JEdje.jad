@@ -1,4 +1,5 @@
-MIDlet-Jar-Size: 40934
+MIDlet-1: JEdjeCanvasTest,,br.org.cesar.jedje.compiler.test.JEdjeCanvasTest
+MIDlet-Jar-Size: 45129
 MIDlet-Jar-URL: JEdje.jar
 MIDlet-Name: JEdje MIDlet Suite
 MIDlet-Vendor: MIDlet Suite Vendor

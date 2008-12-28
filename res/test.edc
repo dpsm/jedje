@@ -5,7 +5,7 @@ collections {
 		max, 1024 768;
 		parts {
 			part {
-				name, "button";
+				name, "rect1";
 				type, RECT;
 				mouse_events, 1;
 				description {
@@ -13,29 +13,96 @@ collections {
 					min, 100 50;
 					max, 100 50;
 					align, 0.5 0.5;
-					color, 211 168 234 255;
+					color, 255 0 255 255;
 					rel1 {
 						relative, 0.0 0.0;
 						offset, 0 0;
 					}
 					rel2 {
-						relative, 1.0 1.0;
-						offset, -1 -1;
+						relative, 0.0 0.0;
+						offset, 50 50;
 					}
 				}
+			}
+			part {
+				name, "rect2";
+				type, RECT;
+				mouse_events, 1;
 				description {
-					state, "clicked" 0.0;
+					state, "default" 0.0;
 					min, 100 50;
 					max, 100 50;
 					align, 0.5 0.5;
-					color, 170 89 214 255;
+					color, 255 0 0 255;
 					rel1 {
-						relative, 0.0 0.0;
-						offset, 0 0;
+						relative, 1.0 0.0;
+						offset, -50 0;
+					}
+					rel2 {
+						relative, 1.0 0.0;
+						offset, 0 50;
+					}
+				}
+			}
+			part {
+				name, "rect3";
+				type, RECT;
+				mouse_events, 1;
+				description {
+					state, "default" 0.0;
+					min, 100 50;
+					max, 100 50;
+					align, 0.5 0.5;
+					color, 0 255 0 255;
+					rel1 {
+						relative, 0.0 1.0;
+						offset, 0 -50;
+					}
+					rel2 {
+						relative, 0.0 1.0;
+						offset, 50 0;
+					}
+				}
+			}
+			part {
+				name, "rect4";
+				type, RECT;
+				mouse_events, 1;
+				description {
+					state, "default" 0.0;
+					min, 100 50;
+					max, 100 50;
+					align, 0.5 0.5;
+					color, 0 0 255 255;
+					rel1 {
+						relative, 1.0 1.0;
+						offset, -50 -50;
 					}
 					rel2 {
 						relative, 1.0 1.0;
-						offset, -1 -1;
+						offset, 0 0;
+					}
+				}
+			}
+			part {
+				name, "rect5";
+				type, RECT;
+				mouse_events, 1;
+				description {
+					state, "default" 0.0;
+					min, 100 50;
+					max, 100 50;
+					align, 0.5 0.5;
+					color, 0 0 255 255;
+					rel1 {
+						relative, 0.0 0.0;
+						offset, 5 5;
+						to, "rect1";
+					}
+					rel2 {
+						relative, 1.0 1.0;
+						offset, -5 -5;
+						to, "rect2";
 					}
 				}
 			}

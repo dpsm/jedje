@@ -3,6 +3,12 @@ package br.org.cesar.jedje.compiler.grammar;
 
 public class JEdjePart {
 
+	public static final int IMAGE 	 = 0x00;
+	public static final int RECT  	 = 0x01;
+	public static final int TEXT  	 = 0x02;
+	public static final int SWALLOW  = 0x03;
+	public static final int NONE 	 = 0x04;
+	
 	private String name;
 	private int	   effect;
 	private int	   type;
@@ -13,6 +19,19 @@ public class JEdjePart {
 	private JEdjePart clipTo;
 	
 	private JEdjeDescription[] descriptions;
+	private JEdjeDescription   current;
+	
+	public static JEdjeDescription getDescription(JEdjePart edjePart, String name) {
+		JEdjeDescription description = null;
+		JEdjeDescription[] descriptions = edjePart.getDescriptions();
+		for (int i = 0; i < descriptions.length; i++) {
+			if (descriptions[i].getName().equals("default")) {
+				description = descriptions[i];
+				break;
+			}
+		}
+		return description;
+	}
 	
 	public JEdjePart(String _name, int _type, int _effect
 			, boolean _repeateEvents, boolean _mouseEvents,
@@ -24,6 +43,8 @@ public class JEdjePart {
 		this.mouseEvents   = _mouseEvents;
 		this.clipTo 	   = _clipTo;
 		this.descriptions  = _descriptions;
+		
+		this.setCurrent(JEdjePart.getDescription(this, "default"));
 	}
 
 	/**
@@ -73,6 +94,20 @@ public class JEdjePart {
 	 */
 	public JEdjeDescription[] getDescriptions() {
 		return descriptions;
+	}
+
+	/**
+	 * @return the current
+	 */
+	public JEdjeDescription getCurrent() {
+		return current;
+	}
+
+	/**
+	 * @param current the current to set
+	 */
+	public void setCurrent(JEdjeDescription current) {
+		this.current = current;
 	}
 	
 }

@@ -1,6 +1,7 @@
-MIDlet-Version: 1.0.0
-MIDlet-Vendor: MIDlet Suite Vendor
+MIDlet-1: JEdjeCanvasTest,,br.org.cesar.jedje.compiler.test.JEdjeCanvasTest
 MIDlet-Jar-URL: JEdje.jar
+MIDlet-Name: JEdje MIDlet Suite
+MIDlet-Vendor: MIDlet Suite Vendor
+MIDlet-Version: 1.0.0
 MicroEdition-Configuration: CLDC-1.1
 MicroEdition-Profile: MIDP-2.1
-MIDlet-Name: JEdje MIDlet Suite

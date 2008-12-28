@@ -1,6 +1,7 @@
 package br.org.cesar.jedje.compiler.parser;
 
 import java.io.IOException;
+import java.util.Enumeration;
 import java.util.Vector;
 
 import br.org.cesar.jedje.compiler.JEdjeException;
@@ -18,6 +19,8 @@ public class JEdjeParser {
 	
 	private JEdjeScanner scanner;
 	private JEdjeToken	 current;
+	
+	private Vector parts;
 	
 	public JEdjeParser(JEdjeScanner _scanner) {
 		this.scanner = _scanner;
@@ -135,7 +138,7 @@ public class JEdjeParser {
 			throw new JEdjeException("Left key expected.");
 		}
 		
-		Vector parts = new Vector();
+		this.parts = new Vector();
 		current = this.scanner.scan();
 		parseGroupPart(parts);
 		
@@ -348,8 +351,22 @@ public class JEdjeParser {
 		return resolvePart(name);
 	}
 
-	private JEdjePart resolvePart(String name) {
-		return null;
+	private JEdjePart resolvePart(String name) throws JEdjeException {
+		JEdjePart result = null;
+		Enumeration enumeration = this.parts.elements();
+		while (enumeration.hasMoreElements()) {
+			JEdjePart part = (JEdjePart) enumeration.nextElement();
+			if (part.getName().equals(name)) {
+				result = part;
+				break;
+			}
+		}
+		
+		if (result == null) {
+			throw new JEdjeException("Can not resolve reference to part " + name + ".");
+		}
+		
+		return result;
 	}
 
 	private JEdjeColor parseColor() throws IOException, JEdjeException {

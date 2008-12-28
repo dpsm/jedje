@@ -4,12 +4,6 @@ import br.org.cesar.jedje.compiler.JEdjeException;
 
 public class JEdjeDescription {
 	
-	private static final int IMAGE 	 = 0x00;
-	private static final int RECT  	 = 0x01;
-	private static final int TEXT  	 = 0x02;
-	private static final int SWALLOW = 0x03;
-	private static final int NONE 	 = 0x04;
-	
 	private String name;
 	private int index;
 	private boolean visible;
@@ -107,19 +101,19 @@ public class JEdjeDescription {
 
 	public static int parseType(String value) throws JEdjeException {
 		if (value.equals("IMAGE")) {
-			return IMAGE;
+			return JEdjePart.IMAGE;
 		} else
 		if (value.equals("RECT")) {
-			return RECT;
+			return JEdjePart.RECT;
 		} else
 		if (value.equals("TEXT")) {
-			return TEXT;
+			return JEdjePart.TEXT;
 		} else
 		if (value.equals("SWALLOW")) {
-			return SWALLOW;
+			return JEdjePart.SWALLOW;
 		} else
 		if (value.equals("NONE")) {
-			return NONE;
+			return JEdjePart.NONE;
 		}	
 		throw new JEdjeException("Unsupported part type.");
 	}
