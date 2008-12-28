@@ -1,13 +1,18 @@
 package br.org.cesar.jedje.javame;
 
+import java.io.IOException;
+
 import javax.microedition.lcdui.Canvas;
 import javax.microedition.lcdui.Graphics;
+import javax.microedition.lcdui.Image;
 
 import br.org.cesar.jedje.compiler.JEdjeException;
 import br.org.cesar.jedje.compiler.grammar.JEdjeColor;
 import br.org.cesar.jedje.compiler.grammar.JEdjeDescription;
+import br.org.cesar.jedje.compiler.grammar.JEdjeDescriptionImage;
 import br.org.cesar.jedje.compiler.grammar.JEdjeDocument;
 import br.org.cesar.jedje.compiler.grammar.JEdjeGroup;
+import br.org.cesar.jedje.compiler.grammar.JEdjeImage;
 import br.org.cesar.jedje.compiler.grammar.JEdjePart;
 import br.org.cesar.jedje.compiler.grammar.JEdjeRel;
 import br.org.cesar.jedje.compiler.grammar.JEdjeTuple;
@@ -53,18 +58,59 @@ public class JEdjeCanvas extends Canvas {
 				g.setColor(color.getR(), color.getG(), color.getB());
 			}
 			
+			JEdjeRel rel1 = current.getRel1();
+			JEdjeRel rel2 = current.getRel2();
 			switch (edjePart.getType()) {
+				case JEdjePart.IMAGE:
+					drawImage(g, current, rel1, rel2, current.getAlign());
+				break;
 				case JEdjePart.RECT:
-					drawRect(g, edjePart, current);
-					break;
-				}
+					drawRect(g, current, rel1, rel2);
+				break;
+			}
 		}
 	}
 
-	private void drawRect(Graphics g, JEdjePart edjePart,
-			JEdjeDescription current) {
-		JEdjeRel rel1 = current.getRel1();
-		JEdjeRel rel2 = current.getRel2();
+	private void drawImage(Graphics g, JEdjeDescription current, JEdjeRel rel1, JEdjeRel rel2, JEdjeTuple align) {
+		JEdjeDescriptionImage image = current.getImage();
+		JEdjeImage normal = image.getNormal();
+		if (normal != null) {
+			try {
+				Image img = Image.createImage(normal.getName());
+				if (rel1 == null) {
+					rel1 = new JEdjeRel(new JEdjeTuple(0, 0), new JEdjeTuple(0, 0), null, null, null);
+				}
+				int[] coords1 = this.parseRel(current.getRel1());
+				if (align != null) {
+					float hAlign = align.getHorizontal();
+					float vAlign = align.getVetical();
+					if (rel1.getTo() != null) {
+						JEdjeDescription pDescription = rel1.getTo().getCurrent();
+						int[] pCoords1 = parseRel(pDescription.getRel1());
+						int[] pCoords2 = parseRel(pDescription.getRel2());
+						coords1[0] += (pCoords2[0] - pCoords1[0] - img.getWidth()) * hAlign;
+						coords1[1] += (pCoords2[1] - pCoords1[1] - img.getHeight()) * vAlign;
+					} else {
+						coords1[0] += (this.getWidth() - coords1[0]) * hAlign;
+						coords1[1] += (this.getHeight() - coords1[1]) * vAlign;
+					}
+					
+				}
+				g.drawImage(img, coords1[0], coords1[1], 0);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
+	private void drawRect(Graphics g, JEdjeDescription current, JEdjeRel rel1, JEdjeRel rel2) {
+		if (rel1 == null) {
+			rel1 = new JEdjeRel(new JEdjeTuple(0, 0), new JEdjeTuple(0, 0), null, null, null);
+		}
+		
+		if (rel2 == null) {
+			rel2 = new JEdjeRel(new JEdjeTuple(1, 1), new JEdjeTuple(0, 0), null, null, null);
+		}
 		
 		int[] coords1 = parseRel(rel1);
 		int[] coords2 = parseRel(rel2);

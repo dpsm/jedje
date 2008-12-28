@@ -1,2 +1,4 @@
 # IGNORE ALL CLASS FILES
 *.class
+bin/*
+deployed/*

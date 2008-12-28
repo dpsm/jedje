@@ -11,11 +11,11 @@ import br.org.cesar.jedje.compiler.parser.JEdjeParser;
 import br.org.cesar.jedje.compiler.parser.JEdjeScanner;
 import br.org.cesar.jedje.javame.JEdjeCanvas;
 
-public class JEdjeCanvasTest extends MIDlet {
+public class JEdjeCanvasMIDlet extends MIDlet {
 
 	private JEdjeCanvas canvas;
 
-	public JEdjeCanvasTest() {
+	public JEdjeCanvasMIDlet() {
 		InputStream  stream  = this.getClass().getResourceAsStream("/test.edc");
 		try {
 			JEdjeScanner  scanner  = new JEdjeScanner(stream);

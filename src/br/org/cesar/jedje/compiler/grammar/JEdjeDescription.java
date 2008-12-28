@@ -14,6 +14,7 @@ public class JEdjeDescription {
 	private JEdjeColor color;
 	private JEdjeRel rel1;
 	private JEdjeRel rel2;
+	private JEdjeDescriptionImage image;
 	
 	public JEdjeDescription(String _name, boolean _visible, JEdjeTuple _align,
 			JEdjeTuple _min, JEdjeTuple _max, JEdjePart _inherit, JEdjeColor _color,
@@ -120,6 +121,20 @@ public class JEdjeDescription {
 
 	public static int parseEffect(String value) {
 		return 0;
+	}
+
+	/**
+	 * @return the image
+	 */
+	public JEdjeDescriptionImage getImage() {
+		return image;
+	}
+
+	/**
+	 * @param image the image to set
+	 */
+	public void setImage(JEdjeDescriptionImage image) {
+		this.image = image;
 	}
 	
 }

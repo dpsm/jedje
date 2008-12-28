@@ -7,6 +7,7 @@ import java.util.Vector;
 import br.org.cesar.jedje.compiler.JEdjeException;
 import br.org.cesar.jedje.compiler.grammar.JEdjeColor;
 import br.org.cesar.jedje.compiler.grammar.JEdjeDescription;
+import br.org.cesar.jedje.compiler.grammar.JEdjeDescriptionImage;
 import br.org.cesar.jedje.compiler.grammar.JEdjeDocument;
 import br.org.cesar.jedje.compiler.grammar.JEdjeGroup;
 import br.org.cesar.jedje.compiler.grammar.JEdjeImage;
@@ -20,10 +21,12 @@ public class JEdjeParser {
 	private JEdjeScanner scanner;
 	private JEdjeToken	 current;
 	
+	private Vector images;
 	private Vector parts;
 	
 	public JEdjeParser(JEdjeScanner _scanner) {
 		this.scanner = _scanner;
+		this.images  = new Vector();
 	}
 	
 	public JEdjeDocument parseDocument() throws IOException, JEdjeException {
@@ -216,6 +219,8 @@ public class JEdjeParser {
 		JEdjeRel rel1 	  = null;
 		JEdjeRel rel2 	  = null;
 		
+		JEdjeDescriptionImage image = null;
+		
 		current = this.scanner.scan();
 		if (current != JEdjeToken.LEFT_KEY) {
 			throw new JEdjeException("Left key expected.");
@@ -256,6 +261,9 @@ public class JEdjeParser {
 			if (current == JEdjeToken.REL2) {
 				rel2 = parseRel();
 				processNext = false;
+			} else
+			if (current == JEdjeToken.IMAGE) {
+				image = parseDescriptionImage();
 			}
 		}
 		
@@ -263,9 +271,75 @@ public class JEdjeParser {
 			throw new JEdjeException("Right key expected.");
 		}
 		
-		descriptions.addElement(new JEdjeDescription(name, visible, align, min
-				, max, inherit, color, rel1, rel2));
+		JEdjeDescription description = new JEdjeDescription(name, visible, align, min
+				, max, inherit, color, rel1, rel2);
+		description.setImage(image);
+		descriptions.addElement(description);
 		current = this.scanner.scan();
+	}
+
+	private JEdjeDescriptionImage parseDescriptionImage() throws IOException, JEdjeException {
+		JEdjeImage normal = null;
+		JEdjeImage tween  = null;
+		
+		current = this.scanner.scan();
+		if (current != JEdjeToken.LEFT_KEY) {
+			throw new JEdjeException("Left key expected.");
+		}
+		
+		while (current != JEdjeToken.RIGHT_KEY) {			
+			current = this.scanner.scan();
+			if (current == JEdjeToken.NORMAL) {
+				normal = parseImageReference();
+			} else
+			if (current == JEdjeToken.TWEEN) {
+				tween  = parseImageReference();
+			}
+		}
+		
+		if (current != JEdjeToken.RIGHT_KEY) {
+			throw new JEdjeException("Right key expected.");
+		}
+		
+		return new JEdjeDescriptionImage(normal, tween, 0, 0, 0, 0);
+	}
+
+	private JEdjeImage parseImageReference() throws IOException, JEdjeException {
+		current = this.scanner.scan();
+		if (current != JEdjeToken.COMMA) {
+			throw new JEdjeException("Expecting normal|tween, <name>;");
+		}
+		
+		current = this.scanner.scan();
+		if (current.getType() != JEdjeToken.IDENTIFIER) {
+			throw new JEdjeException("Expecting normal|tween, <name>;");
+		}
+		String name = current.getValue();
+		
+		current = this.scanner.scan();
+		if (current != JEdjeToken.SEMI_COLLON) {
+			throw new JEdjeException("Expecting normal|tween, <name>;");
+		}
+		
+		return resoveImage(name);
+	}
+
+	private JEdjeImage resoveImage(String name) throws JEdjeException {
+		JEdjeImage result = null;
+		Enumeration enumeration = this.images.elements();
+		while (enumeration.hasMoreElements()) {
+			JEdjeImage image = (JEdjeImage) enumeration.nextElement();
+			if (image.getName().equals(name)) {
+				result = image;
+				break;
+			}
+		}
+		
+		if (result == null) {
+			throw new JEdjeException("Can not resolve reference to image " + name + ".");
+		}
+		
+		return result;
 	}
 
 	private String parseState() throws IOException, JEdjeException {
@@ -463,7 +537,6 @@ public class JEdjeParser {
 		if (current != JEdjeToken.LEFT_KEY) {
 			throw new JEdjeException("Left key expected.");
 		}
-		Vector images = new Vector();
 		parseImageEntries(images);
 		
 		if (current != JEdjeToken.RIGHT_KEY) {
