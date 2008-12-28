@@ -33,7 +33,6 @@ public class JEdjeParser {
 	}
 
 	private JEdjeGroup[] parseGroups() throws IOException, JEdjeException {
-		current = this.scanner.scan();
 		if (current != JEdjeToken.COLLECTIONS) {
 			return null;
 		}
@@ -43,6 +42,7 @@ public class JEdjeParser {
 		}
 		
 		Vector groups = new Vector();
+		current = this.scanner.scan();
 		parseGroupEntries(groups);
 		
 		if (current != JEdjeToken.RIGHT_KEY) {
@@ -55,7 +55,6 @@ public class JEdjeParser {
 	}
 
 	private void parseGroupEntries(Vector images) throws IOException, JEdjeException {
-		current = this.scanner.scan();
 		while (current == JEdjeToken.GROUP) {
 			JEdjeProgram[] programs = null;
 			JEdjePart[]    parts 	= null;
@@ -137,6 +136,7 @@ public class JEdjeParser {
 		}
 		
 		Vector parts = new Vector();
+		current = this.scanner.scan();
 		parseGroupPart(parts);
 		
 		if (current != JEdjeToken.RIGHT_KEY) {
@@ -151,7 +151,6 @@ public class JEdjeParser {
 	}
 
 	private void parseGroupPart(Vector parts) throws IOException, JEdjeException {
-		current = this.scanner.scan();
 		while (current == JEdjeToken.PART) {
 			
 			Vector 	descriptions  = null;
@@ -453,6 +452,7 @@ public class JEdjeParser {
 		if (current != JEdjeToken.RIGHT_KEY) {
 			throw new JEdjeException("Right key expected.");
 		}
+		current = this.scanner.scan();
 		
 		JEdjeImage[] result = new JEdjeImage[images.size()];
 		images.copyInto(result);

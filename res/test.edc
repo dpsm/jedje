@@ -1,0 +1,44 @@
+collections {
+	group {
+		name, "test";
+		min, 32 32;
+		max, 1024 768;
+		parts {
+			part {
+				name, "button";
+				type, RECT;
+				mouse_events, 1;
+				description {
+					state, "default" 0.0;
+					min, 100 50;
+					max, 100 50;
+					align, 0.5 0.5;
+					color, 211 168 234 255;
+					rel1 {
+						relative, 0.0 0.0;
+						offset, 0 0;
+					}
+					rel2 {
+						relative, 1.0 1.0;
+						offset, -1 -1;
+					}
+				}
+				description {
+					state, "clicked" 0.0;
+					min, 100 50;
+					max, 100 50;
+					align, 0.5 0.5;
+					color, 170 89 214 255;
+					rel1 {
+						relative, 0.0 0.0;
+						offset, 0 0;
+					}
+					rel2 {
+						relative, 1.0 1.0;
+						offset, -1 -1;
+					}
+				}
+			}
+		}
+	}
+}		

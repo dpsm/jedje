@@ -33,7 +33,7 @@ public class JEdjeScannerTest extends TestCase {
 	 * @see br.org.cesar.jedje.compiler.parser.JEdjeScanner#scan()
 	 */
 	public final void scan1Test() {
-		InputStream  stream  = this.getClass().getResourceAsStream("/delay.edc");
+		InputStream  stream  = this.getClass().getResourceAsStream("/test.edc");
 		try {
 			JEdjeScanner  scanner  = new JEdjeScanner(stream);
 			JEdjeParser   parser   = new JEdjeParser(scanner);
