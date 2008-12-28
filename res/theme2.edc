@@ -1,0 +1,284 @@
+images {
+image: "../images/bg.jpg" COMP;
+image: "../images/ico1.png" COMP;
+image: "../images/ico2.png" COMP;
+image: "../images/ico3.png" COMP;
+image: "../images/ico4.png" COMP;
+}
+
+collections {
+   group {
+      name: "world";
+      min: 600 600;
+
+      parts {
+         part {
+            name: "bg";
+            type: IMAGE;
+            description {
+               state: "default" 0.0;
+               rel1 {
+                  relative: 0.0 0.0;
+                  offset: 0 0;
+               }
+               rel2 {
+                  relative: 1.0 1.0;
+                  offset: -1 -1;
+               }
+               image.normal: "../images/bg.jpg";
+            }
+         }
+
+         part {
+            name: "ico1";
+            type: IMAGE;
+            description {
+               state: "default" 0.0;
+               min: 120 120;
+               max: 120 120;
+               rel1 {
+                  relative: 0.0 0.0;
+                  offset: 150 150;
+               }
+               rel2 {
+                  relative: 0.0 0.0;
+                  offset: 150 150;
+               }
+               color: 255 255 255 200;
+               image.normal: "../images/ico1.png";
+            }
+            description {
+               state: "centered" 0.0;
+               inherit: "default" 0.0;
+               max: 230 230;
+               rel1 {
+                  relative: 0.5 0.5;
+                  offset: -100 -100;
+               }
+               rel2 {
+                  relative: 0.5 0.5;
+                  offset: 100 100;
+               }
+               color: 255 255 255 255;
+            }
+         }
+
+         part {
+            name: "ico2";
+            type: IMAGE;
+            description {
+               state: "default" 0.0;
+               min: 120 120;
+               max: 120 120;
+               rel1 {
+                  relative: 1.0 0.0;
+                  offset: -150 150;
+               }
+               rel2 {
+                  relative: 1.0 0.0;
+                  offset: -150 150;
+               }
+               color: 255 255 255 200;
+               image.normal: "../images/ico2.png";
+            }
+            description {
+               state: "centered" 0.0;
+               inherit: "default" 0.0;
+               max: 230 230;
+               color: 255 255 255 255;
+               rel1 {
+                  relative: 0.5 0.5;
+                  offset: -100 -100;
+               }
+               rel2 {
+                  relative: 0.5 0.5;
+                  offset: 100 100;
+               }
+            }
+         }
+
+         part {
+            name: "ico3";
+            type: IMAGE;
+            description {
+               state: "default" 0.0;
+               min: 120 120;
+               max: 120 120;
+               color: 255 255 255 200;
+               rel1 {
+                  relative: 0.0 1.0;
+                  offset: 150 -150;
+               }
+               rel2 {
+                  relative: 0.0 1.0;
+                  offset: 150 -150;
+               }
+               image.normal: "../images/ico3.png";
+            }
+            description {
+               state: "centered" 0.0;
+               inherit: "default" 0.0;
+               max: 230 230;
+               color: 255 255 255 255;
+               rel1 {
+                  relative: 0.5 0.5;
+                  offset: -100 -100;
+               }
+               rel2 {
+                  relative: 0.5 0.5;
+                  offset: 100 100;
+               }
+            }
+         }
+
+         part {
+            name: "ico4";
+            type: IMAGE;
+            description {
+               state: "default" 0.0;
+               min: 120 120;
+               max: 120 120;
+               color: 255 255 255 200;
+               rel1 {
+                  relative: 1.0 1.0;
+                  offset: -150 -150;
+               }
+               rel2 {
+                  relative: 1.0 1.0;
+                  offset: -150 -150;
+               }
+               image.normal: "../images/ico4.png";
+            }
+            description {
+               state: "centered" 0.0;
+               inherit: "default" 0.0;
+               max: 230 230;
+               color: 255 255 255 255;
+               rel1 {
+                  relative: 0.5 0.5;
+                  offset: -100 -100;
+               }
+               rel2 {
+                  relative: 0.5 0.5;
+                  offset: 100 100;
+               }
+            }
+         }
+
+         program {
+            name:       "reset_all";
+            signal:     "reset,all";
+            source:     "*";
+            action:      STATE_SET "default" 0.0;
+            target:     "ico1";
+            target:     "ico2";
+            target:     "ico3";
+            target:     "ico4";
+            transition:  LINEAR 0.5;
+         }
+
+         program {
+            name:       "ico1_click";
+            signal:     "mouse,clicked,1";
+            source:     "ico1";
+            action:      STATE_SET "default" 0.0;
+            target:     "ico2";
+            target:     "ico3";
+            target:     "ico4";
+            transition:  LINEAR 0.5;
+            after: "ico1_center";
+         }
+         program {
+            name:       "ico2_click";
+            signal:     "mouse,clicked,1";
+            source:     "ico2";
+            action:      STATE_SET "default" 0.0;
+            target:     "ico1";
+            target:     "ico3";
+            target:     "ico4";
+            transition:  LINEAR 0.5;
+            after: "ico2_center";
+         }
+         program {
+            name:       "ico3_click";
+            signal:     "mouse,clicked,1";
+            source:     "ico3";
+            action:      STATE_SET "default" 0.0;
+            target:     "ico1";
+            target:     "ico2";
+            target:     "ico4";
+            transition:  LINEAR 0.5;
+            after: "ico3_center";
+         }
+         program {
+            name:       "ico4_click";
+            signal:     "mouse,clicked,1";
+            source:     "ico4";
+            action:      STATE_SET "default" 0.0;
+            target:     "ico1";
+            target:     "ico2";
+            target:     "ico3";
+            transition:  LINEAR 0.5;
+            after: "ico4_center";
+         }
+
+         program {
+            name:       "ico1_center";
+            signal:     "center,ico1";
+            source:     "*";
+            action:      STATE_SET "centered" 0.0;
+            target:     "ico1";
+            transition:  LINEAR 0.5;
+         }
+         program {
+            name:       "ico2_center";
+            signal:     "center,ico2";
+            source:     "*";
+            action:      STATE_SET "centered" 0.0;
+            target:     "ico2";
+            transition:  LINEAR 0.5;
+         }
+         program {
+            name:       "ico3_center";
+            signal:     "center,ico3";
+            source:     "*";
+            action:      STATE_SET "centered" 0.0;
+            target:     "ico3";
+            transition:  LINEAR 0.5;
+         }
+         program {
+            name:       "ico4_center";
+            signal:     "center,ico4";
+            source:     "*";
+            action:      STATE_SET "centered" 0.0;
+            target:     "ico4";
+            transition:  LINEAR 0.5;
+         }
+
+         program {
+            name: "all_at_once";
+            signal: "all";
+            source: "*";
+            action: STATE_SET "centered" 0.0;
+            target: "ico1";
+            target: "ico2";
+            target: "ico3";
+            target: "ico4";
+            transition: LINEAR 2.0;
+            after: "reset_all";
+         }
+
+         program {
+            name: "stop";
+            signal: "stop";
+            source: "*";
+            action: ACTION_STOP;
+            target: "all_at_once";
+            target: "ico4_center";
+            target: "ico3_center";
+            target: "ico2_center";
+            target: "ico1_center";
+         }
+      }
+   }
+}

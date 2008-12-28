@@ -1,0 +1,137 @@
+collections {
+
+   group {
+      name: "group1";
+
+      parts {
+         part {
+            name: "group1rect1";
+            type: RECT;
+            description{
+               state: "default" 0.0;
+               rel1 {
+                  relative: 0.1 0.1;
+               }
+               rel2 {
+                  relative: 0.9 0.9;
+               }
+            }
+         }
+         part {
+            name: "swallow1";
+            type: GROUP;
+            source: "group2";
+            description {
+               state: "default" 0.0;
+               min: 100 100;
+               max: 100 100;
+               rel1 {
+                  relative: 0.0 0.0;
+               }
+               rel2 {
+                  relative: 1.0 1.0;
+               }
+            }
+         }
+      }
+   }
+
+   group {
+      name: "group2";
+      min: 100 100;
+      max: 100 100;
+
+      parts {
+         part {
+            name: "group2rect1";
+            type: RECT;
+            description {
+               state: "default" 0.0;
+               color: 127 0 0 127;
+               rel1 {
+                  relative: 0.0 0.0;
+               }
+               rel2 {
+                  relative: 1.0 1.0;
+               }
+            }
+         }
+         part {
+            name: "group2rect2";
+            type: RECT;
+            description {
+               state: "default" 0.0;
+               color: 0 255 127 127;
+               rel1 {
+                  relative: 0.0 0.0;
+                  offset: -50 25;
+               }
+               rel2 {
+                  relative: 1.0 1.0;
+                  offset: 50 -25;
+               }
+            }
+         }
+         part {
+            name: "swallow2";
+            type: GROUP;
+            source: "group3";
+            description {
+               state: "default" 0.0;
+               rel1 {
+                  relative: 0.4 0.4;
+               }
+               rel2 {
+                  relative: 0.6 0.6;
+               }
+            }
+         }
+      }
+   }
+
+   group {
+      name: "group3";
+      min: 100 100;
+      max: 100 100;
+
+      parts {
+         part {
+            name: "group3rect1";
+            type: RECT;
+            description {
+               state: "default" 0.0;
+               color: 0 127 0 127;
+               rel1 {
+                  relative: 0.0 0.0;
+               }
+               rel2 {
+                  relative: 1.0 1.0;
+               }
+            }
+            description {
+               state: "other" 0.0;
+               inherit: "default" 0.0;
+               color: 0 0 0 255;
+            }
+         }
+      }
+
+      programs {
+         program {
+            name: "go_other";
+            signal: "mouse,clicked,1";
+            source: "group3rect1";
+            action: STATE_SET "other" 0.0;
+            target: "group3rect1";
+         }
+         program {
+            name: "go_default";
+            signal: "mouse,clicked,3";
+            source: "group3rect1";
+            action: STATE_SET "default" 0.0;
+            target: "group3rect1";
+         }
+      }
+   }
+
+}
