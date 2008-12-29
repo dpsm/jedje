@@ -117,10 +117,23 @@ collections {
 				mouse_events, 1;
 				description {
 					state, "default" 0.0;
-					min, 100 50;
-					max, 100 50;
 					align, 0.5 0.5;
 					color, 0 255 255 255;
+					rel1 {
+						relative, 0.0 0.0;
+						offset, 10 10;
+						to, "rect5";
+					}
+					rel2 {
+						relative, 1.0 1.0;
+						offset, -10 -10;
+						to, "rect5";
+					}
+				}
+				description {
+					state, "other" 0.0;
+					align, 0.5 0.5;
+					color, 255 255 0 255;
 					rel1 {
 						relative, 0.0 0.0;
 						offset, 10 10;
@@ -139,8 +152,6 @@ collections {
 				mouse_events, 1;
 				description {
 					state, "default" 0.0;
-					min, 100 50;
-					max, 100 50;
 					align, 0.5 0.5;
 					color, 255 255 255 255;
 					rel1 {
@@ -150,6 +161,19 @@ collections {
 					}
 					image {
 						normal, "/img2.jpeg";
+					}
+				}
+				description {
+					state, "other" 0.0;
+					align, 0.5 0.5;
+					color, 255 255 255 255;
+					rel1 {
+						relative, 0.0 0.0;
+						offset, 0 0;
+						to, "rect6";
+					}
+					image {
+						normal, "/img1.png";
 					}
 				}
 			}

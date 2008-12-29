@@ -1,3 +1,14 @@
+/**
+ * Copyright (c) 2008 David Marques.
+ * 
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Contributors:
+ *     David Marques - Adding EPL headers.                     
+ */
 package br.org.cesar.jedje.compiler.parser;
 
 import java.io.IOException;
@@ -264,6 +275,7 @@ public class JEdjeParser {
 			} else
 			if (current == JEdjeToken.IMAGE) {
 				image = parseDescriptionImage();
+				processNext = false;
 			}
 		}
 		
@@ -272,8 +284,7 @@ public class JEdjeParser {
 		}
 		
 		JEdjeDescription description = new JEdjeDescription(name, visible, align, min
-				, max, inherit, color, rel1, rel2);
-		description.setImage(image);
+				, max, inherit, color, image, rel1, rel2);
 		descriptions.addElement(description);
 		current = this.scanner.scan();
 	}
@@ -301,6 +312,7 @@ public class JEdjeParser {
 			throw new JEdjeException("Right key expected.");
 		}
 		
+		current = this.scanner.scan();
 		return new JEdjeDescriptionImage(normal, tween, 0, 0, 0, 0);
 	}
 

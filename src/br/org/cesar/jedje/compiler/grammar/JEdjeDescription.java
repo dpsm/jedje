@@ -1,3 +1,14 @@
+/**
+ * Copyright (c) 2008 David Marques.
+ * 
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Contributors:
+ *     David Marques - Adding EPL headers.                     
+ */
 package br.org.cesar.jedje.compiler.grammar;
 
 import br.org.cesar.jedje.compiler.JEdjeException;
@@ -18,7 +29,7 @@ public class JEdjeDescription {
 	
 	public JEdjeDescription(String _name, boolean _visible, JEdjeTuple _align,
 			JEdjeTuple _min, JEdjeTuple _max, JEdjePart _inherit, JEdjeColor _color,
-				JEdjeRel _rel1, JEdjeRel _rel2) {
+				JEdjeDescriptionImage _image, JEdjeRel _rel1, JEdjeRel _rel2) {
 		this.name 	 = _name;
 		this.visible = _visible;
 		this.align 	 = _align;
@@ -28,6 +39,7 @@ public class JEdjeDescription {
 		this.color	 = _color;
 		this.rel1	 = _rel1;
 		this.rel2	 = _rel2;
+		this.image	 = _image;
 	}
 
 	/**
@@ -130,11 +142,4 @@ public class JEdjeDescription {
 		return image;
 	}
 
-	/**
-	 * @param image the image to set
-	 */
-	public void setImage(JEdjeDescriptionImage image) {
-		this.image = image;
-	}
-	
 }

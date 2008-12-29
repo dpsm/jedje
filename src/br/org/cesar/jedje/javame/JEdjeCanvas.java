@@ -1,3 +1,14 @@
+/**
+ * Copyright (c) 2008 David Marques.
+ * 
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Contributors:
+ *     David Marques - Adding EPL headers.                     
+ */
 package br.org.cesar.jedje.javame;
 
 import java.io.IOException;
@@ -62,7 +73,7 @@ public class JEdjeCanvas extends Canvas {
 			JEdjeRel rel2 = current.getRel2();
 			switch (edjePart.getType()) {
 				case JEdjePart.IMAGE:
-					drawImage(g, current, rel1, rel2, current.getAlign());
+					drawImage(g, current, rel1, current.getAlign());
 				break;
 				case JEdjePart.RECT:
 					drawRect(g, current, rel1, rel2);
@@ -71,7 +82,7 @@ public class JEdjeCanvas extends Canvas {
 		}
 	}
 
-	private void drawImage(Graphics g, JEdjeDescription current, JEdjeRel rel1, JEdjeRel rel2, JEdjeTuple align) {
+	private void drawImage(Graphics g, JEdjeDescription current, JEdjeRel rel1, JEdjeTuple align) {
 		JEdjeDescriptionImage image = current.getImage();
 		JEdjeImage normal = image.getNormal();
 		if (normal != null) {
@@ -80,7 +91,7 @@ public class JEdjeCanvas extends Canvas {
 				if (rel1 == null) {
 					rel1 = new JEdjeRel(new JEdjeTuple(0, 0), new JEdjeTuple(0, 0), null, null, null);
 				}
-				int[] coords1 = this.parseRel(current.getRel1());
+				int[] coords1 = this.parseRel(rel1);
 				if (align != null) {
 					float hAlign = align.getHorizontal();
 					float vAlign = align.getVetical();
@@ -91,8 +102,8 @@ public class JEdjeCanvas extends Canvas {
 						coords1[0] += (pCoords2[0] - pCoords1[0] - img.getWidth()) * hAlign;
 						coords1[1] += (pCoords2[1] - pCoords1[1] - img.getHeight()) * vAlign;
 					} else {
-						coords1[0] += (this.getWidth() - coords1[0]) * hAlign;
-						coords1[1] += (this.getHeight() - coords1[1]) * vAlign;
+						coords1[0] += (this.getWidth() - coords1[0] - img.getWidth()) * hAlign;
+						coords1[1] += (this.getHeight() - coords1[1] - img.getHeight()) * vAlign;
 					}
 					
 				}
