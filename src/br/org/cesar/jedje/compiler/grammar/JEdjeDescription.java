@@ -26,10 +26,11 @@ public class JEdjeDescription {
 	private JEdjeRel rel1;
 	private JEdjeRel rel2;
 	private JEdjeDescriptionImage image;
+	private JEdjeDescriptionText text;
 	
 	public JEdjeDescription(String _state, boolean _visible, JEdjeTuple _align,
 			JEdjeTuple _min, JEdjeTuple _max, JEdjeDescription _inherit, JEdjeColor _color,
-				JEdjeDescriptionImage _image, JEdjeRel _rel1, JEdjeRel _rel2) {
+				JEdjeDescriptionImage _image, JEdjeDescriptionText _text, JEdjeRel _rel1, JEdjeRel _rel2) {
 		this.state 	 = _state;
 		this.visible = _visible;
 		this.align 	 = _align;
@@ -40,6 +41,7 @@ public class JEdjeDescription {
 		this.rel1	 = _rel1;
 		this.rel2	 = _rel2;
 		this.image	 = _image;
+		this.text	 = _text;
 	}
 
 	/**
@@ -160,6 +162,13 @@ public class JEdjeDescription {
 			return this.inherit.getImage();
 		}
 		return image;
+	}
+
+	/**
+	 * @return the text
+	 */
+	public JEdjeDescriptionText getText() {
+		return text;
 	}
 
 }

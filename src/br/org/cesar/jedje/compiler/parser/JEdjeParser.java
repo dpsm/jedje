@@ -19,6 +19,7 @@ import br.org.cesar.jedje.JEdjeException;
 import br.org.cesar.jedje.compiler.grammar.JEdjeColor;
 import br.org.cesar.jedje.compiler.grammar.JEdjeDescription;
 import br.org.cesar.jedje.compiler.grammar.JEdjeDescriptionImage;
+import br.org.cesar.jedje.compiler.grammar.JEdjeDescriptionText;
 import br.org.cesar.jedje.compiler.grammar.JEdjeDocument;
 import br.org.cesar.jedje.compiler.grammar.JEdjeGroup;
 import br.org.cesar.jedje.compiler.grammar.JEdjeImage;
@@ -213,6 +214,7 @@ public class JEdjeParser {
 		JEdjeRel rel2 	  = null;
 		
 		JEdjeDescriptionImage image   = null;
+		JEdjeDescriptionText  text	  = null;
 		JEdjeDescription	  inherit = null;
 		
 		current = this.scanner.scan();
@@ -251,6 +253,9 @@ public class JEdjeParser {
 			} else
 			if (current == JEdjeToken.IMAGE) {
 				image = parseDescriptionImage();
+			} else
+			if (current == JEdjeToken.TEXT) {
+				text = parseDescriptionText();
 			} else {
 				throw new JEdjeException("Unsupported token: " + current);
 			}
@@ -261,9 +266,59 @@ public class JEdjeParser {
 		}
 		
 		JEdjeDescription description = new JEdjeDescription(state, visible, align, min
-				, max, inherit, color, image, rel1, rel2);
+				, max, inherit, color, image, text, rel1, rel2);
 		descriptions.addElement(description);
 		current = this.scanner.scan();
+	}
+
+	private JEdjeDescriptionText parseDescriptionText() throws IOException, JEdjeException {
+		String value = null;
+		int	   size	 = 12;
+		
+		JEdjeColor color = null;
+		JEdjeTuple align = null;
+		JEdjeRel rel1  = null;
+		JEdjeRel rel2  = null;
+		
+		current = this.scanner.scan();
+		if (current != JEdjeToken.LEFT_KEY) {
+			throw new JEdjeException("Left key expected.");
+		}
+		
+		current = this.scanner.scan();
+		while (current != JEdjeToken.RIGHT_KEY) {			
+			if (current == JEdjeToken.TEXT) {
+				value = parseName();
+			} else
+			if (current == JEdjeToken.SIZE) {
+				size  = parseTextSize();
+			} else {
+				throw new JEdjeException("Unsupported token: " + current);
+			}
+		}
+		
+		if (current != JEdjeToken.RIGHT_KEY) {
+			throw new JEdjeException("Right key expected.");
+		}
+		
+		current = this.scanner.scan();
+		return new JEdjeDescriptionText(value, null, size, null , null);
+	}
+
+	private int parseTextSize() throws IOException, JEdjeException {
+		current = this.scanner.scan();
+		
+		if (current.getType() != JEdjeToken.INTEGER) {
+			throw new JEdjeException("Expecting size <integer>;");
+		}
+		int size = Integer.parseInt(current.getValue());
+		
+		current = this.scanner.scan();
+		if (current != JEdjeToken.SEMI_COLLON) {
+			throw new JEdjeException("Expecting size <integer>;");
+		}
+		current = this.scanner.scan();
+		return size;
 	}
 
 	private JEdjeDescription parseInherit(Vector descriptions) throws IOException, JEdjeException {

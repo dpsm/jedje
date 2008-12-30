@@ -14,6 +14,7 @@ package br.org.cesar.jedje.javame;
 import java.io.IOException;
 
 import javax.microedition.lcdui.Canvas;
+import javax.microedition.lcdui.Font;
 import javax.microedition.lcdui.Graphics;
 import javax.microedition.lcdui.Image;
 
@@ -21,6 +22,7 @@ import br.org.cesar.jedje.JEdjeException;
 import br.org.cesar.jedje.compiler.grammar.JEdjeColor;
 import br.org.cesar.jedje.compiler.grammar.JEdjeDescription;
 import br.org.cesar.jedje.compiler.grammar.JEdjeDescriptionImage;
+import br.org.cesar.jedje.compiler.grammar.JEdjeDescriptionText;
 import br.org.cesar.jedje.compiler.grammar.JEdjeDocument;
 import br.org.cesar.jedje.compiler.grammar.JEdjeGroup;
 import br.org.cesar.jedje.compiler.grammar.JEdjeImage;
@@ -83,14 +85,61 @@ public class JEdjeCanvas extends Canvas {
 					drawImage(g, current, rel1, current.getAlign());
 				break;
 				case JEdjePart.RECT:
-					drawRect(g, current, rel1, rel2);
+					drawRect(g, current, rel1, rel2, current.getAlign());
+				break;
+				case JEdjePart.TEXT:
+					drawText(g, current, rel1, current.getAlign());
 				break;
 			}
 		}
 	}
 
+	private void drawText(Graphics g, JEdjeDescription current, JEdjeRel rel1, JEdjeTuple align) {
+		JEdjeDescriptionText text = current.getText();
+		if (text == null) {
+			return;
+		}
+		
+		int  size = text.getSize();
+		Font font = null;
+
+		int[] sizes = {Font.SIZE_SMALL, Font.SIZE_MEDIUM, Font.SIZE_LARGE};
+		for (int i = 0; i < sizes.length; i++) {
+			Font f = Font.getFont(Font.FACE_MONOSPACE, Font.STYLE_PLAIN, sizes[i]);
+			if (f.getHeight() > size) {
+				break;
+			} else {
+				font = f;
+			}
+		}
+
+		JEdjeColor color = current.getColor();
+		if (color != null) {
+			g.setColor(color.getR(), color.getG(), color.getB());
+		}
+		
+		if (font != null) {
+			g.setFont(font);
+		}
+		
+		int[] coords1 = parseRel(rel1);
+		if (align != null) {
+			float hAlign = align.getHorizontal();
+			float vAlign = align.getVetical();
+			
+			coords1[0] -= font.stringWidth(text.getValue()) * hAlign;
+			coords1[1] -= font.getHeight() * vAlign;
+		}
+		
+		g.drawString(text.getValue(), coords1[0], coords1[1], 0x00);
+	}
+
 	private void drawImage(Graphics g, JEdjeDescription current, JEdjeRel rel1, JEdjeTuple align) {
 		JEdjeDescriptionImage image = current.getImage();
+		if (image == null) {
+			return;
+		}
+		
 		JEdjeImage normal = image.getNormal();
 		if (normal != null) {
 			try {
@@ -102,17 +151,8 @@ public class JEdjeCanvas extends Canvas {
 				if (align != null) {
 					float hAlign = align.getHorizontal();
 					float vAlign = align.getVetical();
-					if (rel1.getTo() != null) {
-						JEdjeDescription pDescription = rel1.getTo().getCurrent();
-						int[] pCoords1 = parseRel(pDescription.getRel1());
-						int[] pCoords2 = parseRel(pDescription.getRel2());
-						coords1[0] += (pCoords2[0] - pCoords1[0] - img.getWidth()) * hAlign;
-						coords1[1] += (pCoords2[1] - pCoords1[1] - img.getHeight()) * vAlign;
-					} else {
-						coords1[0] += (this.getWidth() - coords1[0] - img.getWidth()) * hAlign;
-						coords1[1] += (this.getHeight() - coords1[1] - img.getHeight()) * vAlign;
-					}
-					
+					coords1[0] -= img.getWidth() * hAlign;
+					coords1[1] -= img.getHeight() * vAlign;
 				}
 				g.drawImage(img, coords1[0], coords1[1], 0);
 			} catch (IOException e) {
@@ -121,7 +161,7 @@ public class JEdjeCanvas extends Canvas {
 		}
 	}
 
-	private void drawRect(Graphics g, JEdjeDescription current, JEdjeRel rel1, JEdjeRel rel2) {
+	private void drawRect(Graphics g, JEdjeDescription current, JEdjeRel rel1, JEdjeRel rel2, JEdjeTuple align) {
 		if (rel1 == null) {
 			rel1 = new JEdjeRel(new JEdjeTuple(0, 0), new JEdjeTuple(0, 0), null, null, null);
 		}
@@ -132,6 +172,16 @@ public class JEdjeCanvas extends Canvas {
 		
 		int[] coords1 = parseRel(rel1);
 		int[] coords2 = parseRel(rel2);
+		
+		if (align != null) {
+			float hAlign = align.getHorizontal();
+			float vAlign = align.getVetical();
+			coords1[0] -= (coords2[0] - coords1[0]) * hAlign;
+			coords2[0] -= (coords2[0] - coords1[0]) * hAlign;
+			
+			coords1[1] -= (coords2[1] - coords1[1]) * vAlign;
+			coords2[1] -= (coords2[1] - coords1[1]) * vAlign;
+		}
 		
 		g.fillRect(coords1[0], coords1[1]
                , coords2[0] - coords1[0], coords2[1] - coords1[1]);

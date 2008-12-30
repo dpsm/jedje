@@ -59,13 +59,11 @@ collections {
 				description {
 					state, "selected" 0.0;
 					align, 0.5 0.5;
+					inherit, "default" 0.0;
 					rel1 {
-						relative, 0.0 0.0;
+						relative, 0.5 0.5;
 						offset, 0 0;
 						to, "rect2";
-					}
-					image {
-						normal, "/icon1.png";
 					}
 				}
 			}
@@ -87,13 +85,11 @@ collections {
 				description {
 					state, "selected" 0.0;
 					align, 0.5 0.5;
+					inherit, "default" 0.0;
 					rel1 {
-						relative, 0.0 0.0;
+						relative, 0.5 0.5;
 						offset, 0 0;
 						to, "rect2";
-					}
-					image {
-						normal, "/icon2.png";
 					}
 				}
 			}
@@ -115,13 +111,11 @@ collections {
 				description {
 					state, "selected" 0.0;
 					align, 0.5 0.5;
+					inherit, "default" 0.0;
 					rel1 {
-						relative, 0.0 0.0;
+						relative, 0.5 0.5;
 						offset, 0 0;
 						to, "rect2";
-					}
-					image {
-						normal, "/icon3.png";
 					}
 				}
 			}
@@ -145,9 +139,64 @@ collections {
 					align, 0.5 0.5;
 					inherit, "default" 0.0;
 					rel1 {
-						relative, 0.0 0.0;
+						relative, 0.5 0.5;
 						offset, 0 0;
 						to, "rect2";
+					}
+				}
+			}
+			part {
+				name, "menu_text";
+				type, TEXT;
+				description {
+					state, "default" 0.0;
+					align, 0.5 0.5;
+					color, 0 0 0 255;
+					visible, 0;
+					rel1 {
+						relative, 0.5 0.5;
+						offset, 0 35;
+						to, "rect2";
+					}
+					text {
+						text, "menu";
+						size 20;
+					}
+				}
+				description {
+					state, "option1" 0.0;
+					inherit, "default" 0.0;
+					visible, 1;
+					text {
+						text, "Option 1";
+						size 20;
+					}
+				}
+				description {
+					state, "option2" 0.0;
+					inherit, "default" 0.0;
+					visible, 1;
+					text {
+						text, "Option 2";
+						size 20;
+					}
+				}
+				description {
+					state, "option3" 0.0;
+					inherit, "default" 0.0;
+					visible, 1;
+					text {
+						text, "Option 3";
+						size 20;
+					}
+				}
+				description {
+					state, "option4" 0.0;
+					inherit, "default" 0.0;
+					visible, 1;
+					text {
+						text, "Option 4";
+						size 20;
 					}
 				}
 			}

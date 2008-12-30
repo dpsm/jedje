@@ -17,16 +17,14 @@ public class JEdjeDescriptionText {
 	private String font;
 	private int    size;
 	
-	private JEdjeTuple align;
 	private JEdjeTuple min;
 	private JEdjeTuple fit;
 	
-	public JEdjeDescriptionText(String _value, String _font, int _size,
-			JEdjeTuple _align, JEdjeTuple _min, JEdjeTuple _fit) {
+	public JEdjeDescriptionText(String _value, String _font, 
+			int _size, JEdjeTuple _min, JEdjeTuple _fit) {
 		this.value = _value;
 		this.font  = _font;
 		this.size  = _size;
-		this.align = _align;
 		this.min   = _min;
 		this.fit   = _fit;
 	}
@@ -53,13 +51,6 @@ public class JEdjeDescriptionText {
 	}
 
 	/**
-	 * @return the align
-	 */
-	public JEdjeTuple getAlign() {
-		return align;
-	}
-
-	/**
 	 * @return the min
 	 */
 	public JEdjeTuple getMin() {
@@ -72,6 +63,6 @@ public class JEdjeDescriptionText {
 	public JEdjeTuple getFit() {
 		return fit;
 	}
-	
+
 }
 

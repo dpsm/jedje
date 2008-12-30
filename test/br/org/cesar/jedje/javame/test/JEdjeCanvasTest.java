@@ -21,41 +21,50 @@ public class JEdjeCanvasTest extends JEdjeCanvas {
 	protected void keyReleased(int keycode) {
 		JEdjeDescription description = null;
 		JEdjeGroup		 group		 = null;
-		JEdjePart 		 part 		 = null;
+		JEdjePart 		 iconPart	 = null;
+		JEdjePart 		 textPart	 = null;
 		
 		group = JEdjeDocument.getGroup(getDocument(), "menu");
+		textPart = JEdjeDocument.getPart(group, "menu_text");
 		
 		switch (keycode) {
 			case Canvas.KEY_NUM1:
-				part = JEdjeDocument.getPart(group, "icon1");
+				description = JEdjeDocument.getDescription(textPart, "option1");
+				iconPart = JEdjeDocument.getPart(group, "icon1");
 			break;
 			case Canvas.KEY_NUM3:
-				part = JEdjeDocument.getPart(group, "icon2");
+				description = JEdjeDocument.getDescription(textPart, "option2");
+				iconPart = JEdjeDocument.getPart(group, "icon2");
 			break;
 			case Canvas.KEY_NUM7:
-				part = JEdjeDocument.getPart(group, "icon3");
+				description = JEdjeDocument.getDescription(textPart, "option3");
+				iconPart = JEdjeDocument.getPart(group, "icon3");
 			break;
 			case Canvas.KEY_NUM9:
-				part = JEdjeDocument.getPart(group, "icon4");
+				description = JEdjeDocument.getDescription(textPart, "option4");
+				iconPart = JEdjeDocument.getPart(group, "icon4");
 			break;
 			case Canvas.KEY_NUM0:
 				JEdjeCanvasMIDlet.getInstance().notifyDestroyed();
 			break;
 		}
 		
+		if (textPart != null) {
+			textPart.setCurrent(description);
+		}
 		
-		if (part != null) {
+		if (iconPart != null) {
 			if (selected != null) {
 				description = JEdjeDocument.getDescription(selected, "default");
 				selected.setCurrent(description);
 			}
 			
-			description = JEdjeDocument.getDescription(part, "selected");
-			part.setCurrent(description);
+			description = JEdjeDocument.getDescription(iconPart, "selected");
+			iconPart.setCurrent(description);
 			
-			selected = part;
-			this.repaint();
+			selected = iconPart;
 		}
+		this.repaint();
 	}
 	
 }
