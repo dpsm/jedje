@@ -15,7 +15,7 @@ import java.io.EOFException;
 import java.io.IOException;
 import java.io.InputStream;
 
-import br.org.cesar.jedje.compiler.JEdjeException;
+import br.org.cesar.jedje.JEdjeException;
 
 public class JEdjeScanner {
 

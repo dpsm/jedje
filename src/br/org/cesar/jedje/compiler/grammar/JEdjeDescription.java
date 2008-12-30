@@ -11,26 +11,26 @@
  */
 package br.org.cesar.jedje.compiler.grammar;
 
-import br.org.cesar.jedje.compiler.JEdjeException;
+import br.org.cesar.jedje.JEdjeException;
 
 public class JEdjeDescription {
 	
-	private String name;
+	private String state;
 	private int index;
 	private boolean visible;
 	private JEdjeTuple align;
 	private JEdjeTuple min;
 	private JEdjeTuple max;
-	private JEdjePart inherit;
+	private JEdjeDescription inherit;
 	private JEdjeColor color;
 	private JEdjeRel rel1;
 	private JEdjeRel rel2;
 	private JEdjeDescriptionImage image;
 	
-	public JEdjeDescription(String _name, boolean _visible, JEdjeTuple _align,
-			JEdjeTuple _min, JEdjeTuple _max, JEdjePart _inherit, JEdjeColor _color,
+	public JEdjeDescription(String _state, boolean _visible, JEdjeTuple _align,
+			JEdjeTuple _min, JEdjeTuple _max, JEdjeDescription _inherit, JEdjeColor _color,
 				JEdjeDescriptionImage _image, JEdjeRel _rel1, JEdjeRel _rel2) {
-		this.name 	 = _name;
+		this.state 	 = _state;
 		this.visible = _visible;
 		this.align 	 = _align;
 		this.min 	 = _min;
@@ -45,8 +45,11 @@ public class JEdjeDescription {
 	/**
 	 * @return the name
 	 */
-	public String getName() {
-		return name;
+	public String getState() {
+		if (this.state == null && this.inherit != null) {
+			return this.inherit.getState();
+		}
+		return state;
 	}
 
 	/**
@@ -67,6 +70,9 @@ public class JEdjeDescription {
 	 * @return the align
 	 */
 	public JEdjeTuple getAlign() {
+		if (this.align == null && this.inherit != null) {
+			return this.inherit.getAlign();
+		}
 		return align;
 	}
 
@@ -74,6 +80,9 @@ public class JEdjeDescription {
 	 * @return the min
 	 */
 	public JEdjeTuple getMin() {
+		if (this.min == null && this.inherit != null) {
+			return this.inherit.getMin();
+		}
 		return min;
 	}
 
@@ -81,13 +90,16 @@ public class JEdjeDescription {
 	 * @return the max
 	 */
 	public JEdjeTuple getMax() {
+		if (this.max == null && this.inherit != null) {
+			return this.inherit.getMax();
+		}
 		return max;
 	}
 
 	/**
 	 * @return the inherit
 	 */
-	public JEdjePart getInherit() {
+	public JEdjeDescription getInherit() {
 		return inherit;
 	}
 
@@ -95,6 +107,9 @@ public class JEdjeDescription {
 	 * @return the color
 	 */
 	public JEdjeColor getColor() {
+		if (this.color == null && this.inherit != null) {
+			return this.inherit.getColor();
+		}
 		return color;
 	}
 
@@ -102,6 +117,9 @@ public class JEdjeDescription {
 	 * @return the rel1
 	 */
 	public JEdjeRel getRel1() {
+		if (this.rel1 == null && this.inherit != null) {
+			return this.inherit.getRel1();
+		}
 		return rel1;
 	}
 
@@ -109,6 +127,9 @@ public class JEdjeDescription {
 	 * @return the rel2
 	 */
 	public JEdjeRel getRel2() {
+		if (this.rel2 == null && this.inherit != null) {
+			return this.inherit.getRel2();
+		}
 		return rel2;
 	}
 
@@ -131,14 +152,13 @@ public class JEdjeDescription {
 		throw new JEdjeException("Unsupported part type.");
 	}
 
-	public static int parseEffect(String value) {
-		return 0;
-	}
-
 	/**
 	 * @return the image
 	 */
 	public JEdjeDescriptionImage getImage() {
+		if (this.image == null && this.inherit != null) {
+			return this.inherit.getImage();
+		}
 		return image;
 	}
 

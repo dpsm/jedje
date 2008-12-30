@@ -11,7 +11,7 @@
  */
 package br.org.cesar.jedje.compiler.grammar;
 
-import br.org.cesar.jedje.compiler.JEdjeException;
+import br.org.cesar.jedje.JEdjeException;
 
 public class JEdjeImage {
 	

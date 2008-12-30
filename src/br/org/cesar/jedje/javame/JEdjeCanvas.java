@@ -17,7 +17,7 @@ import javax.microedition.lcdui.Canvas;
 import javax.microedition.lcdui.Graphics;
 import javax.microedition.lcdui.Image;
 
-import br.org.cesar.jedje.compiler.JEdjeException;
+import br.org.cesar.jedje.JEdjeException;
 import br.org.cesar.jedje.compiler.grammar.JEdjeColor;
 import br.org.cesar.jedje.compiler.grammar.JEdjeDescription;
 import br.org.cesar.jedje.compiler.grammar.JEdjeDescriptionImage;

@@ -9,7 +9,7 @@
  * Contributors:
  *     David Marques - Adding EPL headers.                     
  */
-package br.org.cesar.jedje.compiler;
+package br.org.cesar.jedje;
 
 public class JEdjeException extends Exception {
 	

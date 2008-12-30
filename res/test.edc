@@ -143,13 +143,11 @@ collections {
 				description {
 					state, "selected" 0.0;
 					align, 0.5 0.5;
+					inherit, "default" 0.0;
 					rel1 {
 						relative, 0.0 0.0;
 						offset, 0 0;
 						to, "rect2";
-					}
-					image {
-						normal, "/icon4.png";
 					}
 				}
 			}

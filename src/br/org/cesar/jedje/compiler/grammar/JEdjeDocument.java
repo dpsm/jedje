@@ -71,7 +71,7 @@ public class JEdjeDocument {
 		
 		JEdjeDescription[] descriptions = _part.getDescriptions();
 		for (int i = 0; i < descriptions.length; i++) {
-			if (descriptions[i].getName().equals(_description)) {
+			if (descriptions[i].getState().equals(_description)) {
 				description = descriptions[i];
 				break;
 			}

@@ -15,7 +15,7 @@ import java.io.IOException;
 import java.util.Enumeration;
 import java.util.Vector;
 
-import br.org.cesar.jedje.compiler.JEdjeException;
+import br.org.cesar.jedje.JEdjeException;
 import br.org.cesar.jedje.compiler.grammar.JEdjeColor;
 import br.org.cesar.jedje.compiler.grammar.JEdjeDescription;
 import br.org.cesar.jedje.compiler.grammar.JEdjeDescriptionImage;
@@ -84,13 +84,8 @@ public class JEdjeParser {
 				throw new JEdjeException("Left key expected.");
 			}
 			
-			boolean processNext = true;
+			current = this.scanner.scan();
 			while (current != JEdjeToken.RIGHT_KEY) {
-				if (processNext) {					
-					current = this.scanner.scan();
-				} else {
-					processNext = true;
-				}
 				if (current == JEdjeToken.NAME) {
 					name = parseName();
 				} else
@@ -100,18 +95,11 @@ public class JEdjeParser {
 				if (current == JEdjeToken.MAX) {
 					max = parseTuple();
 				} else
-				if (current == JEdjeToken.PROGRAMS) {
-					programs = parseGroupPrograms();
-					processNext = false;
-				} else
 				if (current == JEdjeToken.PARTS) {
 					parts = parseGroupParts();
-					processNext = false;
+				} else {
+					throw new JEdjeException("Unsupported token: " + current);
 				}
-			}
-			
-			if (current != JEdjeToken.RIGHT_KEY) {
-				throw new JEdjeException("Right key expected.");
 			}
 			
 			images.addElement(new JEdjeGroup(name, min, max, programs, parts));
@@ -143,6 +131,8 @@ public class JEdjeParser {
 		if (current != JEdjeToken.SEMI_COLLON) {
 			throw new JEdjeException("Expecting <keyword>, num num;");
 		}
+		
+		current = this.scanner.scan();
 		return new JEdjeTuple(param1, param2);
 	}
 
@@ -183,21 +173,13 @@ public class JEdjeParser {
 			}
 			
 			descriptions = new Vector();
-			boolean processNext = true;
+			current = this.scanner.scan();
 			while (current != JEdjeToken.RIGHT_KEY) {
-				if (processNext) {					
-					current = this.scanner.scan();
-				} else {
-					processNext = true;
-				}
 				if (current == JEdjeToken.NAME) {
 					name = parseName();
 				} else
 				if (current == JEdjeToken.TYPE) {
 					type = parsePartType();
-				} else
-				if (current == JEdjeToken.EFFECT) {
-					effect = JEdjeDescription.parseEffect(this.current.getValue());
 				} else
 				if (current == JEdjeToken.REPEAT_EVENTS) {
 					repeateEvents = parseBooleanParam();
@@ -207,7 +189,8 @@ public class JEdjeParser {
 				} else
 				if (current == JEdjeToken.DESCRIPTION) {
 					parseDescription(descriptions);
-					processNext = false;
+				} else {
+					throw new JEdjeException("Unsupported token: " + current);
 				}
 			}
 			
@@ -220,32 +203,27 @@ public class JEdjeParser {
 
 	private void parseDescription(Vector descriptions) throws IOException, JEdjeException {
 		
-		String name 	  = null;
+		String state 	  = null;
 		boolean visible   = true;
 		JEdjeTuple align  = null;
 		JEdjeTuple min	  = null;
 		JEdjeTuple max	  = null;
-		JEdjePart inherit = null;
 		JEdjeColor color  = null;
 		JEdjeRel rel1 	  = null;
 		JEdjeRel rel2 	  = null;
 		
-		JEdjeDescriptionImage image = null;
+		JEdjeDescriptionImage image   = null;
+		JEdjeDescription	  inherit = null;
 		
 		current = this.scanner.scan();
 		if (current != JEdjeToken.LEFT_KEY) {
 			throw new JEdjeException("Left key expected.");
 		}
 
-		boolean processNext = true;
+		current = this.scanner.scan();
 		while (current != JEdjeToken.RIGHT_KEY) {
-			if (processNext) {				
-				current = this.scanner.scan();
-			} else {
-				processNext = true;
-			}
 			if (current == JEdjeToken.STATE) {
-				name = parseState();
+				state = parseState();
 			} else
 			if (current == JEdjeToken.VISIBLE) {
 				visible = parseBooleanParam();
@@ -260,22 +238,21 @@ public class JEdjeParser {
 				max = parseTuple();
 			} else
 			if (current == JEdjeToken.INHERIT) {
-				throw new JEdjeException("description inherit not suported.");
+				inherit = parseInherit(descriptions);
 			} else
 			if (current == JEdjeToken.COLOR) {
 				color = parseColor();
 			} else
 			if (current == JEdjeToken.REL1) {
 				rel1 = parseRel();
-				processNext = false;
 			} else
 			if (current == JEdjeToken.REL2) {
 				rel2 = parseRel();
-				processNext = false;
 			} else
 			if (current == JEdjeToken.IMAGE) {
 				image = parseDescriptionImage();
-				processNext = false;
+			} else {
+				throw new JEdjeException("Unsupported token: " + current);
 			}
 		}
 		
@@ -283,10 +260,57 @@ public class JEdjeParser {
 			throw new JEdjeException("Right key expected.");
 		}
 		
-		JEdjeDescription description = new JEdjeDescription(name, visible, align, min
+		JEdjeDescription description = new JEdjeDescription(state, visible, align, min
 				, max, inherit, color, image, rel1, rel2);
 		descriptions.addElement(description);
 		current = this.scanner.scan();
+	}
+
+	private JEdjeDescription parseInherit(Vector descriptions) throws IOException, JEdjeException {
+		current = this.scanner.scan();
+		if (current != JEdjeToken.COMMA) {
+			throw new JEdjeException("Expecting inherit, <name> <index>;");
+		}
+		
+		current = this.scanner.scan();
+		if (current.getType() != JEdjeToken.IDENTIFIER) {
+			throw new JEdjeException("Expecting inherit, <name> <index>;");
+		}
+		String state = current.getValue();
+		
+		current = this.scanner.scan();
+		if (current.getType() != JEdjeToken.FLOAT &&
+				current.getType() != JEdjeToken.INTEGER) {
+			throw new JEdjeException("Expecting inherit, <name> <index>;");
+		}
+		float index = Float.parseFloat(current.getValue());
+		
+		current = this.scanner.scan();
+		if (current != JEdjeToken.SEMI_COLLON) {
+			throw new JEdjeException("Expecting inherit, <name> <index>;");
+		}
+		current = this.scanner.scan();
+		
+		return resolveDescription(descriptions, state);
+	}
+
+	private JEdjeDescription resolveDescription(Vector _descriptions, String _state) throws JEdjeException {
+		JEdjeDescription result = null;
+		
+		Enumeration enumeration = _descriptions.elements();
+		while (enumeration.hasMoreElements()) {
+			JEdjeDescription description = (JEdjeDescription) enumeration.nextElement();
+			if (description.getState().equals(_state)) {
+				result = description;
+				break;
+			}
+		}
+		
+		if (result == null) {
+			throw new JEdjeException("Unable to resolve state: " + _state);
+		}
+		
+		return result;
 	}
 
 	private JEdjeDescriptionImage parseDescriptionImage() throws IOException, JEdjeException {
@@ -298,13 +322,15 @@ public class JEdjeParser {
 			throw new JEdjeException("Left key expected.");
 		}
 		
+		current = this.scanner.scan();
 		while (current != JEdjeToken.RIGHT_KEY) {			
-			current = this.scanner.scan();
 			if (current == JEdjeToken.NORMAL) {
 				normal = parseImageReference();
 			} else
 			if (current == JEdjeToken.TWEEN) {
 				tween  = parseImageReference();
+			} else {
+				throw new JEdjeException("Unsupported token: " + current);
 			}
 		}
 		
@@ -333,6 +359,7 @@ public class JEdjeParser {
 			throw new JEdjeException("Expecting normal|tween, <name>;");
 		}
 		
+		current = this.scanner.scan();
 		return resoveImage(name);
 	}
 
@@ -376,6 +403,7 @@ public class JEdjeParser {
 		if (current != JEdjeToken.SEMI_COLLON) {
 			throw new JEdjeException("Expecting state, <name> <index>;");
 		}
+		current = this.scanner.scan();
 		return name;
 	}
 
@@ -392,8 +420,8 @@ public class JEdjeParser {
 			throw new JEdjeException("Left key expected.");
 		}
 		
+		current = this.scanner.scan();
 		while (current != JEdjeToken.RIGHT_KEY) {			
-			current = this.scanner.scan();
 			if (current == JEdjeToken.RELATIVE) {
 				relative = parseTuple();
 			} else
@@ -408,6 +436,8 @@ public class JEdjeParser {
 			} else
 			if (current == JEdjeToken.TO_Y) {
 				to_y = parsePartReference();
+			} else {
+				throw new JEdjeException("Unsupported token: " + current);
 			}
 		}
 		
@@ -434,6 +464,7 @@ public class JEdjeParser {
 		if (current != JEdjeToken.SEMI_COLLON) {
 			throw new JEdjeException("Expecting <reference>, <identifier>;");
 		}
+		current = this.scanner.scan();
 		return resolvePart(name);
 	}
 
@@ -475,6 +506,7 @@ public class JEdjeParser {
 			throw new JEdjeException("Expecting <event>, <identifier>;");
 		}
 		
+		current = this.scanner.scan();
 		return new JEdjeColor(color[0], color[1], color[2], color[3]);
 	}
 
@@ -494,6 +526,7 @@ public class JEdjeParser {
 		if (current != JEdjeToken.SEMI_COLLON) {
 			throw new JEdjeException("Expecting <event>, <identifier>;");
 		}
+		current = this.scanner.scan();
 		return result;
 	}
 
@@ -513,12 +546,8 @@ public class JEdjeParser {
 		if (current != JEdjeToken.SEMI_COLLON) {
 			throw new JEdjeException("Expecting type, <identifier>;");
 		}
-		return result;
-	}
-
-	private JEdjeProgram[] parseGroupPrograms() throws IOException, JEdjeException {
 		current = this.scanner.scan();
-		return null;
+		return result;
 	}
 
 	private String parseName() throws JEdjeException, IOException {
@@ -537,6 +566,7 @@ public class JEdjeParser {
 		if (current != JEdjeToken.SEMI_COLLON) {
 			throw new JEdjeException("Expecting name, <identifier>;");
 		}
+		current = this.scanner.scan();
 		return name;
 	}
 

@@ -36,7 +36,7 @@ public class JEdjePart {
 		JEdjeDescription description = null;
 		JEdjeDescription[] descriptions = edjePart.getDescriptions();
 		for (int i = 0; i < descriptions.length; i++) {
-			if (descriptions[i].getName().equals("default")) {
+			if (descriptions[i].getState().equals("default")) {
 				description = descriptions[i];
 				break;
 			}

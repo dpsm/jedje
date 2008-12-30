@@ -2,7 +2,7 @@ package br.org.cesar.jedje.javame.test;
 
 import javax.microedition.lcdui.Canvas;
 
-import br.org.cesar.jedje.compiler.JEdjeException;
+import br.org.cesar.jedje.JEdjeException;
 import br.org.cesar.jedje.compiler.grammar.JEdjeDescription;
 import br.org.cesar.jedje.compiler.grammar.JEdjeDocument;
 import br.org.cesar.jedje.compiler.grammar.JEdjeGroup;
