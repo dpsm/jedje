@@ -100,13 +100,13 @@ public class JEdjeCanvas extends Canvas {
 			return;
 		}
 		
+		Font font = Font.getDefaultFont();
 		int  size = text.getSize();
-		Font font = null;
 
 		int[] sizes = {Font.SIZE_SMALL, Font.SIZE_MEDIUM, Font.SIZE_LARGE};
 		for (int i = 0; i < sizes.length; i++) {
 			Font f = Font.getFont(Font.FACE_MONOSPACE, Font.STYLE_PLAIN, sizes[i]);
-			if (f.getHeight() > size) {
+			if (f.getSize() > size) {
 				break;
 			} else {
 				font = f;
@@ -128,7 +128,7 @@ public class JEdjeCanvas extends Canvas {
 			float vAlign = align.getVetical();
 			
 			coords1[0] -= font.stringWidth(text.getValue()) * hAlign;
-			coords1[1] -= font.getHeight() * vAlign;
+			coords1[1] -= font.getSize() * vAlign;
 		}
 		
 		g.drawString(text.getValue(), coords1[0], coords1[1], 0x00);
