@@ -1,179 +1,155 @@
 images {
-	image, "/img2.jpeg" COMP;
-	image, "/img1.png" COMP;
+	image, "/icon1.png" COMP;
+	image, "/icon2.png" COMP;
+	image, "/icon3.png" COMP;
+	image, "/icon4.png" COMP;
 }
 
 collections {
 	group {
-		name, "test";
-		min, 32 32;
-		max, 1024 768;
+		name, "menu";
 		parts {
 			part {
 				name, "rect1";
 				type, RECT;
-				mouse_events, 1;
 				description {
 					state, "default" 0.0;
-					min, 100 50;
-					max, 100 50;
-					align, 0.5 0.5;
-					color, 255 0 0 255;
+					color, 255 153 0 255;
 					rel1 {
 						relative, 0.0 0.0;
 						offset, 0 0;
 					}
 					rel2 {
-						relative, 0.0 0.0;
-						offset, 50 50;
+						relative, 1.0 1.0;
+						offset, 0 0;
 					}
 				}
 			}
 			part {
 				name, "rect2";
 				type, RECT;
-				mouse_events, 1;
 				description {
 					state, "default" 0.0;
-					min, 100 50;
-					max, 100 50;
-					align, 0.5 0.5;
-					color, 0 255 0 255;
-					rel1 {
-						relative, 1.0 0.0;
-						offset, -50 0;
-					}
-					rel2 {
-						relative, 1.0 0.0;
-						offset, 0 50;
-					}
-				}
-			}
-			part {
-				name, "rect3";
-				type, RECT;
-				mouse_events, 1;
-				description {
-					state, "default" 0.0;
-					min, 100 50;
-					max, 100 50;
-					align, 0.5 0.5;
-					color, 0 255 0 255;
-					rel1 {
-						relative, 0.0 1.0;
-						offset, 0 -50;
-					}
-					rel2 {
-						relative, 0.0 1.0;
-						offset, 50 0;
-					}
-				}
-			}
-			part {
-				name, "rect4";
-				type, RECT;
-				mouse_events, 1;
-				description {
-					state, "default" 0.0;
-					min, 100 50;
-					max, 100 50;
-					align, 0.5 0.5;
-					color, 0 0 255 255;
-					rel1 {
-						relative, 1.0 1.0;
-						offset, -50 -50;
-					}
-					rel2 {
-						relative, 1.0 1.0;
-						offset, 0 0;
-					}
-				}
-			}
-			part {
-				name, "rect5";
-				type, RECT;
-				mouse_events, 1;
-				description {
-					state, "default" 0.0;
-					min, 100 50;
-					max, 100 50;
-					align, 0.5 0.5;
-					color, 0 0 0 255;
-					rel1 {
-						relative, 0.0 0.0;
-						offset, 5 5;
-						to, "rect1";
-					}
-					rel2 {
-						relative, 1.0 1.0;
-						offset, -5 -5;
-						to, "rect4";
-					}
-				}
-			}
-			part {
-				name, "rect6";
-				type, RECT;
-				mouse_events, 1;
-				description {
-					state, "default" 0.0;
-					align, 0.5 0.5;
-					color, 0 255 255 255;
+					color, 255 255 255 255;
 					rel1 {
 						relative, 0.0 0.0;
 						offset, 10 10;
-						to, "rect5";
 					}
 					rel2 {
 						relative, 1.0 1.0;
 						offset, -10 -10;
-						to, "rect5";
-					}
-				}
-				description {
-					state, "other" 0.0;
-					align, 0.5 0.5;
-					color, 255 255 0 255;
-					rel1 {
-						relative, 0.0 0.0;
-						offset, 10 10;
-						to, "rect5";
-					}
-					rel2 {
-						relative, 1.0 1.0;
-						offset, -10 -10;
-						to, "rect5";
 					}
 				}
 			}
 			part {
-				name, "image1";
+				name, "icon1";
 				type, IMAGE;
-				mouse_events, 1;
 				description {
 					state, "default" 0.0;
-					align, 0.5 0.5;
-					color, 255 255 255 255;
+					align, 0.0 0.0;
 					rel1 {
 						relative, 0.0 0.0;
-						offset, 0 0;
-						to, "rect6";
+						offset, 10 10;
+						to, "rect2";
 					}
 					image {
-						normal, "/img2.jpeg";
+						normal, "/icon1.png";
 					}
 				}
 				description {
-					state, "other" 0.0;
+					state, "selected" 0.0;
 					align, 0.5 0.5;
-					color, 255 255 255 255;
 					rel1 {
 						relative, 0.0 0.0;
 						offset, 0 0;
-						to, "rect6";
+						to, "rect2";
 					}
 					image {
-						normal, "/img1.png";
+						normal, "/icon1.png";
+					}
+				}
+			}
+			part {
+				name, "icon2";
+				type, IMAGE;
+				description {
+					state, "default" 0.0;
+					align, 0.0 0.0;
+					rel1 {
+						relative, 1.0 0.0;
+						offset, -60 +10;
+						to, "rect2";
+					}
+					image {
+						normal, "/icon2.png";
+					}
+				}
+				description {
+					state, "selected" 0.0;
+					align, 0.5 0.5;
+					rel1 {
+						relative, 0.0 0.0;
+						offset, 0 0;
+						to, "rect2";
+					}
+					image {
+						normal, "/icon2.png";
+					}
+				}
+			}
+			part {
+				name, "icon3";
+				type, IMAGE;
+				description {
+					state, "default" 0.0;
+					align, 0.0 0.0;
+					rel1 {
+						relative, 0.0 1.0;
+						offset, 10 -60;
+						to, "rect2";
+					}
+					image {
+						normal, "/icon3.png";
+					}
+				}
+				description {
+					state, "selected" 0.0;
+					align, 0.5 0.5;
+					rel1 {
+						relative, 0.0 0.0;
+						offset, 0 0;
+						to, "rect2";
+					}
+					image {
+						normal, "/icon3.png";
+					}
+				}
+			}
+			part {
+				name, "icon4";
+				type, IMAGE;
+				description {
+					state, "default" 0.0;
+					align, 0.0 0.0;
+					rel1 {
+						relative, 1.0 1.0;
+						offset, -60 -60;
+						to, "rect2";
+					}
+					image {
+						normal, "/icon4.png";
+					}
+				}
+				description {
+					state, "selected" 0.0;
+					align, 0.5 0.5;
+					rel1 {
+						relative, 0.0 0.0;
+						offset, 0 0;
+						to, "rect2";
+					}
+					image {
+						normal, "/icon4.png";
 					}
 				}
 			}

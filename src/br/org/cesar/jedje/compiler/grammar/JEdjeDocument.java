@@ -11,6 +11,7 @@
  */
 package br.org.cesar.jedje.compiler.grammar;
 
+
 public class JEdjeDocument {
 	
 	private JEdjeImage[] images;
@@ -35,9 +36,8 @@ public class JEdjeDocument {
 		return groups;
 	}
 	
-	public static JEdjePart getPart(JEdjeDocument _document, String _group, String _part) {
+	public static JEdjeGroup getGroup(JEdjeDocument _document, String _group) {
 		JEdjeGroup myGroup = null;
-		JEdjePart  myPart  = null;
 		
 		JEdjeGroup[] groups = _document.getGroups();
 		for (int i = 0; i < groups.length; i++) {
@@ -48,33 +48,35 @@ public class JEdjeDocument {
 			}
 		}
 		
-		if (myGroup != null) {			
-			JEdjePart[] parts = myGroup.getParts();
-			for (int i = 0; i < parts.length; i++) {
-				JEdjePart part = parts[i];
-				if (part.getName().equals(_part)) {
-					myPart = part;
-					break;
-				}
+		return myGroup;
+	}
+	
+	public static JEdjePart getPart(JEdjeGroup _group, String _part) {
+		JEdjePart  myPart  = null;
+
+		JEdjePart[] parts = _group.getParts();
+		for (int i = 0; i < parts.length; i++) {
+			JEdjePart part = parts[i];
+			if (part.getName().equals(_part)) {
+				myPart = part;
+				break;
 			}
 		}
+		
 		return myPart;
 	}
 	
-	public static JEdjeDescription getDescription(JEdjeDocument _document, String _group, String _part, String _description) {
+	public static JEdjeDescription getDescription(JEdjePart _part, String _description) {
 		JEdjeDescription description = null;
-		JEdjePart  		 part  		 = null;
 		
-		part = JEdjeDocument.getPart(_document, _group, _part);
-		if (part != null) {
-			JEdjeDescription[] descriptions = part.getDescriptions();
-			for (int i = 0; i < descriptions.length; i++) {
-				if (descriptions[i].getName().equals(_description)) {
-					description = descriptions[i];
-					break;
-				}
+		JEdjeDescription[] descriptions = _part.getDescriptions();
+		for (int i = 0; i < descriptions.length; i++) {
+			if (descriptions[i].getName().equals(_description)) {
+				description = descriptions[i];
+				break;
 			}
 		}
+		
 		return description;
 	}
 }

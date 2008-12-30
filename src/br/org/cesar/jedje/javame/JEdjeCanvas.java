@@ -38,6 +38,13 @@ public class JEdjeCanvas extends Canvas {
 		this.loadEdjeGroup(group);
 	}
 	
+	/**
+	 * @return the document
+	 */
+	public JEdjeDocument getDocument() {
+		return document;
+	}
+
 	private void loadEdjeGroup(String name) throws JEdjeException {
 		JEdjeGroup[] groups = this.document.getGroups();
 		for (int i = 0; i < groups.length; i++) {
@@ -53,7 +60,7 @@ public class JEdjeCanvas extends Canvas {
 		}
 	}
 
-	protected void paint(Graphics g) {
+	protected final void paint(Graphics g) {
 		JEdjePart[] parts = this.group.getParts();
 		for (int i = 0; i < parts.length; i++) {
 			this.drawPart(g, parts[i]);
