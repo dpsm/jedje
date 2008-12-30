@@ -70,7 +70,7 @@ public class JEdjeCanvas extends Canvas {
 	private void drawPart(Graphics g, JEdjePart edjePart) {
 		JEdjeDescription current = edjePart.getCurrent();
 		
-		if (current != null) {
+		if (current != null && current.isVisible()) {
 			JEdjeColor color = current.getColor();
 			if (color != null) {
 				g.setColor(color.getR(), color.getG(), color.getB());
