@@ -13,6 +13,9 @@ package br.org.cesar.jedje.compiler.grammar;
 
 import br.org.cesar.jedje.JEdjeException;
 
+/**
+ * @author <a href="dpsmarques@yahoo.com">David Marques</a>
+ */
 public class JEdjeDescription {
 	
 	private String state;

@@ -20,7 +20,7 @@ import br.org.cesar.jedje.compiler.grammar.JEdjeColor;
 import br.org.cesar.jedje.compiler.grammar.JEdjeDescription;
 import br.org.cesar.jedje.compiler.grammar.JEdjeDescriptionImage;
 import br.org.cesar.jedje.compiler.grammar.JEdjeDescriptionText;
-import br.org.cesar.jedje.compiler.grammar.JEdjeDocument;
+import br.org.cesar.jedje.compiler.grammar.JEdjeCollection;
 import br.org.cesar.jedje.compiler.grammar.JEdjeGroup;
 import br.org.cesar.jedje.compiler.grammar.JEdjeImage;
 import br.org.cesar.jedje.compiler.grammar.JEdjePart;
@@ -28,7 +28,17 @@ import br.org.cesar.jedje.compiler.grammar.JEdjeProgram;
 import br.org.cesar.jedje.compiler.grammar.JEdjeRel;
 import br.org.cesar.jedje.compiler.grammar.JEdjeTuple;
 
+/**
+ *  JEdjeParser class parses an Edje Data Collection file into a
+ *  JEdjeCollection structure.
+ *  
+ * @author <a href="dpsmarques@yahoo.com">David Marques</a>
+ */
 public class JEdjeParser {
+	
+    // Constants -----------------------------------------------------
+    
+    // Attributes ----------------------------------------------------
 	
 	private JEdjeScanner scanner;
 	private JEdjeToken	 current;
@@ -36,20 +46,36 @@ public class JEdjeParser {
 	private Vector images;
 	private Vector parts;
 	
+	// Static --------------------------------------------------------
+    
+    // Constructors --------------------------------------------------
+	
+	// Public --------------------------------------------------------
+
 	public JEdjeParser(JEdjeScanner _scanner) {
 		this.scanner = _scanner;
 		this.images  = new Vector();
 	}
 	
-	public JEdjeDocument parseDocument() throws IOException, JEdjeException {
-		JEdjeDocument document = null;
+	public JEdjeCollection parseDocument() throws IOException, JEdjeException {
+		JEdjeCollection collection = null;
 		JEdjeImage[] images = parseImages();
 		JEdjeGroup[] groups = parseGroups();
 		
-		document = new JEdjeDocument(images, groups);
-		return document;
+		collection = new JEdjeCollection(images, groups);
+		return collection;
 	}
-
+	
+	// X implementation ----------------------------------------------
+    
+    // Y overrides ---------------------------------------------------
+    
+    // Package protected ---------------------------------------------
+    
+    // Protected -----------------------------------------------------
+    
+    // Private -------------------------------------------------------
+	
 	private JEdjeGroup[] parseGroups() throws IOException, JEdjeException {
 		if (current != JEdjeToken.COLLECTIONS) {
 			return null;
@@ -275,11 +301,6 @@ public class JEdjeParser {
 		String value = null;
 		int	   size	 = 12;
 		
-		JEdjeColor color = null;
-		JEdjeTuple align = null;
-		JEdjeRel rel1  = null;
-		JEdjeRel rel2  = null;
-		
 		current = this.scanner.scan();
 		if (current != JEdjeToken.LEFT_KEY) {
 			throw new JEdjeException("Left key expected.");
@@ -338,7 +359,7 @@ public class JEdjeParser {
 				current.getType() != JEdjeToken.INTEGER) {
 			throw new JEdjeException("Expecting inherit, <name> <index>;");
 		}
-		float index = Float.parseFloat(current.getValue());
+//		float index = Float.parseFloat(current.getValue());
 		
 		current = this.scanner.scan();
 		if (current != JEdjeToken.SEMI_COLLON) {
@@ -452,7 +473,7 @@ public class JEdjeParser {
 		if (current.getType() != JEdjeToken.FLOAT) {
 			throw new JEdjeException("Expecting state, <name> <index>;");
 		}
-		float index = Float.parseFloat(current.getValue());
+//		float index = Float.parseFloat(current.getValue());
 		
 		current = this.scanner.scan();
 		if (current != JEdjeToken.SEMI_COLLON) {

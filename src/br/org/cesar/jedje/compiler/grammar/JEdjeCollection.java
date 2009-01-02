@@ -11,13 +11,15 @@
  */
 package br.org.cesar.jedje.compiler.grammar;
 
-
-public class JEdjeDocument {
+/**
+ * @author <a href="dpsmarques@yahoo.com">David Marques</a>
+ */
+public class JEdjeCollection {
 	
 	private JEdjeImage[] images;
 	private JEdjeGroup[] groups;
 	
-	public JEdjeDocument(JEdjeImage[] _images, JEdjeGroup[] _groups) {
+	public JEdjeCollection(JEdjeImage[] _images, JEdjeGroup[] _groups) {
 		this.images = _images;
 		this.groups = _groups;
 	}
@@ -36,10 +38,10 @@ public class JEdjeDocument {
 		return groups;
 	}
 	
-	public static JEdjeGroup getGroup(JEdjeDocument _document, String _group) {
+	public static JEdjeGroup getGroup(JEdjeCollection _collection, String _group) {
 		JEdjeGroup myGroup = null;
 		
-		JEdjeGroup[] groups = _document.getGroups();
+		JEdjeGroup[] groups = _collection.getGroups();
 		for (int i = 0; i < groups.length; i++) {
 			JEdjeGroup group = groups[i];
 			if (group.getName().equals(_group)) {

@@ -14,7 +14,7 @@ package br.org.cesar.jedje.compiler.test;
 import java.io.InputStream;
 
 import jmunit.framework.cldc11.TestCase;
-import br.org.cesar.jedje.compiler.grammar.JEdjeDocument;
+import br.org.cesar.jedje.compiler.grammar.JEdjeCollection;
 import br.org.cesar.jedje.compiler.parser.JEdjeParser;
 import br.org.cesar.jedje.compiler.parser.JEdjeScanner;
 
@@ -41,8 +41,8 @@ public class JEdjeScannerTest extends TestCase {
 		try {
 			JEdjeScanner  scanner  = new JEdjeScanner(stream);
 			JEdjeParser   parser   = new JEdjeParser(scanner);
-			JEdjeDocument document = parser.parseDocument();
-			assertNotNull(document);
+			JEdjeCollection collection = parser.parseDocument();
+			assertNotNull(collection);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

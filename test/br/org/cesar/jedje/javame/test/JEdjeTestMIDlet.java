@@ -17,34 +17,34 @@ import javax.microedition.lcdui.Display;
 import javax.microedition.midlet.MIDlet;
 import javax.microedition.midlet.MIDletStateChangeException;
 
-import br.org.cesar.jedje.compiler.grammar.JEdjeDocument;
+import br.org.cesar.jedje.compiler.grammar.JEdjeCollection;
 import br.org.cesar.jedje.compiler.parser.JEdjeParser;
 import br.org.cesar.jedje.compiler.parser.JEdjeScanner;
 import br.org.cesar.jedje.javame.JEdjeCanvas;
 
-public class JEdjeCanvasMIDlet extends MIDlet {
+public class JEdjeTestMIDlet extends MIDlet {
 
-	private static JEdjeCanvasMIDlet instance;
+	private static JEdjeTestMIDlet instance;
 	
-	private JEdjeDocument document; 
+	private JEdjeCollection collection; 
 	private JEdjeCanvas   canvas;
 	
-	public JEdjeCanvasMIDlet() {
+	public JEdjeTestMIDlet() {
 		InputStream  stream  = this.getClass().getResourceAsStream("/test.edc");
 		try {
 			JEdjeScanner  scanner  = new JEdjeScanner(stream);
 			JEdjeParser   parser   = new JEdjeParser(scanner);
-			this.document = parser.parseDocument();
-			this.canvas   = new JEdjeCanvasTest(document, "menu");
+			this.collection = parser.parseDocument();
+			this.canvas   = new JEdjeTestCanvas(collection, "menu");
 			this.canvas.setFullScreenMode(true);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		JEdjeCanvasMIDlet.instance = this;
+		JEdjeTestMIDlet.instance = this;
 	}
 
-	public static JEdjeCanvasMIDlet getInstance() {
-		return JEdjeCanvasMIDlet.instance;
+	public static JEdjeTestMIDlet getInstance() {
+		return JEdjeTestMIDlet.instance;
 	}
 	
 	protected void destroyApp(boolean arg0) throws MIDletStateChangeException {

@@ -11,6 +11,9 @@
  */
 package br.org.cesar.jedje.compiler.grammar;
 
+/**
+ * @author <a href="dpsmarques@yahoo.com">David Marques</a>
+ */
 public class JEdjeAction {
 	
 	private String param1;

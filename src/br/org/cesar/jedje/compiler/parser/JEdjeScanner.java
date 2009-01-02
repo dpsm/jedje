@@ -17,16 +17,31 @@ import java.io.InputStream;
 
 import br.org.cesar.jedje.JEdjeException;
 
+/**
+ *  JEdjeScanner class scans an input stream for tokens to be parsed.
+ *  
+ * @author <a href="dpsmarques@yahoo.com">David Marques</a>
+ */
 public class JEdjeScanner {
+
+    // Constants -----------------------------------------------------
+
+	// Attributes ----------------------------------------------------
 
 	private InputStream stream;
 	private char		current;
+	
+	// Static --------------------------------------------------------
+    
+    // Constructors --------------------------------------------------
 	
 	public JEdjeScanner(InputStream _stream) throws IOException {
 		this.stream  = _stream;
 		this.current = this.next();
 	}
 	
+	// Public --------------------------------------------------------
+
 	public JEdjeToken scan() throws IOException, JEdjeException {
 		StringBuffer buffer = new StringBuffer();
 		JEdjeToken 	 result = null;
@@ -66,6 +81,16 @@ public class JEdjeScanner {
 		return result;
 	}
 	
+	// X implementation ----------------------------------------------
+    
+    // Y overrides ---------------------------------------------------
+    
+    // Package protected ---------------------------------------------
+    
+    // Protected -----------------------------------------------------
+    
+    // Private -------------------------------------------------------
+	
 	private void removeComment() throws IOException, JEdjeException {
 		this.current = this.next();
 		if (this.current != '*') {
@@ -76,7 +101,7 @@ public class JEdjeScanner {
 		do {
 			foundStar = this.current == '*';
 			this.current = this.next();
-		} while (!foundStar && this.current != '/');
+		} while (!(foundStar && this.current == '/'));
 		this.current = this.next();
 	}
 

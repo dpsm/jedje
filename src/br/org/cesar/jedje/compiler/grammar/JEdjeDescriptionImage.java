@@ -11,6 +11,9 @@
  */
 package br.org.cesar.jedje.compiler.grammar;
 
+/**
+ * @author <a href="dpsmarques@yahoo.com">David Marques</a>
+ */
 public class JEdjeDescriptionImage {
 	
 	private JEdjeImage normal;

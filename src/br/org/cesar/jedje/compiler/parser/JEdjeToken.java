@@ -11,10 +11,17 @@
  */
 package br.org.cesar.jedje.compiler.parser;
 
+/**
+ *  JEdjeToken class wraps edje tokens to be parsed by the JEdjeParser.
+ *  
+ * @author <a href="dpsmarques@yahoo.com">David Marques</a>
+ */
 public class JEdjeToken {
 
+    // Constants -----------------------------------------------------
+    
 	private static int index = 0x05;
-
+	
 	public static final int SPECIAL_WORD = 0x01;
 	public static final int IDENTIFIER 	 = 0x02;
 	public static final int INTEGER    	 = 0x03;
@@ -26,7 +33,7 @@ public class JEdjeToken {
 	public static final JEdjeToken COMMA 		= new JEdjeToken(index++, ",");
 	public static final JEdjeToken SEMI_COLLON	= new JEdjeToken(index++, ";");
 	public static final JEdjeToken COLLON 		= new JEdjeToken(index++, ":");
-
+	
 	/*LANGUAGE TOKENS*/
 	public static final JEdjeToken IMAGES 		= new JEdjeToken(SPECIAL_WORD, "images");
 	public static final JEdjeToken IMAGE  		= new JEdjeToken(SPECIAL_WORD, "image");
@@ -77,9 +84,16 @@ public class JEdjeToken {
 	public static final JEdjeToken TRANSITION	= new JEdjeToken(SPECIAL_WORD, "transition");
 	public static final JEdjeToken AFTER  		= new JEdjeToken(SPECIAL_WORD, "after");
 	public static final JEdjeToken BORDER  		= new JEdjeToken(SPECIAL_WORD, "border");
-
+	
 	public static final JEdjeToken EOF 			= new JEdjeToken(index++, "JEdje-END");
 	
+    // Attributes ----------------------------------------------------
+	
+	private String value;
+	private int	   type;
+	
+	// Static --------------------------------------------------------
+    
 	public static JEdjeToken getToken(String _value) {
 		JEdjeToken token = null;
 		if (IMAGES.getValue().equals(_value)) {
@@ -234,13 +248,14 @@ public class JEdjeToken {
 		return token;
 	}
 	
-	private String value;
-	private int	   type;
+    // Constructors --------------------------------------------------
 	
 	public JEdjeToken(int _type, String _value) {
 		this.value = _value;
 		this.type  = _type;
 	}
+	
+	// Public --------------------------------------------------------
 
 	/**
 	 * @return the value
@@ -277,5 +292,15 @@ public class JEdjeToken {
 		buffer.append(this.getValue());
 		return buffer.toString();
 	}
+	
+	// X implementation ----------------------------------------------
+    
+    // Y overrides ---------------------------------------------------
+    
+    // Package protected ---------------------------------------------
+    
+    // Protected -----------------------------------------------------
+    
+    // Private -------------------------------------------------------
 	
 }

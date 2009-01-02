@@ -19,36 +19,82 @@ import javax.microedition.lcdui.Graphics;
 import javax.microedition.lcdui.Image;
 
 import br.org.cesar.jedje.JEdjeException;
+import br.org.cesar.jedje.compiler.grammar.JEdjeCollection;
 import br.org.cesar.jedje.compiler.grammar.JEdjeColor;
 import br.org.cesar.jedje.compiler.grammar.JEdjeDescription;
 import br.org.cesar.jedje.compiler.grammar.JEdjeDescriptionImage;
 import br.org.cesar.jedje.compiler.grammar.JEdjeDescriptionText;
-import br.org.cesar.jedje.compiler.grammar.JEdjeDocument;
 import br.org.cesar.jedje.compiler.grammar.JEdjeGroup;
 import br.org.cesar.jedje.compiler.grammar.JEdjeImage;
 import br.org.cesar.jedje.compiler.grammar.JEdjePart;
 import br.org.cesar.jedje.compiler.grammar.JEdjeRel;
 import br.org.cesar.jedje.compiler.grammar.JEdjeTuple;
 
+/**
+ *  JEdjeCanvas class is an implementation of an Edje surface for
+ *  Java ME applications.
+ *  <br>
+ *  It will draw the specified group from the specified collection.
+ *  
+ * @author <a href="dpsmarques@yahoo.com">David Marques</a>
+ */
 public class JEdjeCanvas extends Canvas {
 	
-	private JEdjeDocument document;
-	private JEdjeGroup 	  group;
+	// Constants -----------------------------------------------------
+    
+	// Attributes ----------------------------------------------------
 	
-	public JEdjeCanvas(JEdjeDocument edje, String group) throws JEdjeException {
-		this.document = edje;
+	private JEdjeCollection collection;
+	private JEdjeGroup 	  	group;
+	
+	// Static --------------------------------------------------------
+    
+    // Constructors --------------------------------------------------
+
+	public JEdjeCanvas(JEdjeCollection edje, String group) throws JEdjeException {
+		this.collection = edje;
 		this.loadEdjeGroup(group);
 	}
-	
+
+	// Public --------------------------------------------------------
+
 	/**
-	 * @return the document
+	 * @return the collection
 	 */
-	public JEdjeDocument getDocument() {
-		return document;
+	public JEdjeCollection getDataCollection() {
+		return collection;
 	}
 
+	// X implementation ----------------------------------------------
+    
+    // Y overrides ---------------------------------------------------
+    
+    // Package protected ---------------------------------------------
+    
+    // Protected -----------------------------------------------------
+    
+	protected final void paint(Graphics g) {
+		JEdjePart[] parts = this.group.getParts();
+		
+		int color = g.getColor();
+		Font font = g.getFont();
+		
+		for (int i = 0; i < parts.length; i++) {
+			this.drawPart(g, parts[i]);
+			g.setColor(color);
+			g.setFont(font);
+		}
+		this.paintImpl(g);
+	}
+
+	protected void paintImpl(Graphics g) {
+		
+	}
+
+	// Private -------------------------------------------------------
+	
 	private void loadEdjeGroup(String name) throws JEdjeException {
-		JEdjeGroup[] groups = this.document.getGroups();
+		JEdjeGroup[] groups = this.collection.getGroups();
 		for (int i = 0; i < groups.length; i++) {
 			JEdjeGroup group = groups[i];
 			if (group.getName().equals(name)) {
@@ -61,14 +107,7 @@ public class JEdjeCanvas extends Canvas {
 			throw new JEdjeException("Unable to load group " + name + ".");
 		}
 	}
-
-	protected final void paint(Graphics g) {
-		JEdjePart[] parts = this.group.getParts();
-		for (int i = 0; i < parts.length; i++) {
-			this.drawPart(g, parts[i]);
-		}
-	}
-
+	
 	private void drawPart(Graphics g, JEdjePart edjePart) {
 		JEdjeDescription current = edjePart.getCurrent();
 		

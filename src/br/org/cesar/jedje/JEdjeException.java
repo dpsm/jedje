@@ -11,10 +11,41 @@
  */
 package br.org.cesar.jedje;
 
+/**
+ *  JEdjeException class handles all exceptions of the JEdje API.
+ * 
+ * @author <a href="dpsmarques@yahoo.com">David Marques</a>
+ */
 public class JEdjeException extends Exception {
 	
+    // Constants -----------------------------------------------------
+    
+    // Attributes ----------------------------------------------------
+	
+	// Static --------------------------------------------------------
+    
+    // Constructors --------------------------------------------------
+
+	/**
+	 * Creates an instance of the JEdjeException associated
+	 * to the specified error message.
+	 * 
+	 * @param _message error message.
+	 */
 	public JEdjeException(String _message) {
 		super(_message);
 	}
 	
+	// Public --------------------------------------------------------
+
+	// X implementation ----------------------------------------------
+    
+    // Y overrides ---------------------------------------------------
+    
+    // Package protected ---------------------------------------------
+    
+    // Protected -----------------------------------------------------
+    
+    // Private -------------------------------------------------------
+
 }

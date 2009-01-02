@@ -11,7 +11,9 @@
  */
 package br.org.cesar.jedje.compiler.grammar;
 
-
+/**
+ * @author <a href="dpsmarques@yahoo.com">David Marques</a>
+ */
 public class JEdjePart {
 
 	public static final int IMAGE 	 = 0x00;
