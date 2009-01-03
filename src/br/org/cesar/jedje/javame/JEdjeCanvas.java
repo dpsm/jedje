@@ -12,6 +12,7 @@
 package br.org.cesar.jedje.javame;
 
 import java.io.IOException;
+import java.io.InputStream;
 
 import javax.microedition.lcdui.Canvas;
 import javax.microedition.lcdui.Font;
@@ -29,6 +30,8 @@ import br.org.cesar.jedje.compiler.grammar.JEdjeImage;
 import br.org.cesar.jedje.compiler.grammar.JEdjePart;
 import br.org.cesar.jedje.compiler.grammar.JEdjeRel;
 import br.org.cesar.jedje.compiler.grammar.JEdjeTuple;
+import br.org.cesar.jedje.compiler.parser.JEdjeParser;
+import br.org.cesar.jedje.compiler.parser.JEdjeScanner;
 
 /**
  *  JEdjeCanvas class is an implementation of an Edje surface for
@@ -51,11 +54,22 @@ public class JEdjeCanvas extends Canvas {
     
     // Constructors --------------------------------------------------
 
-	public JEdjeCanvas(JEdjeCollection edje, String group) throws JEdjeException {
-		this.collection = edje;
-		this.loadEdjeGroup(group);
+	public JEdjeCanvas(String _edje, String _group) throws JEdjeException {
+		InputStream  stream  = this.getClass().getResourceAsStream(_edje);
+		if (stream == null) {
+			throw new JEdjeException("Unable to load " + _edje + " edje file.");
+		}
+		
+		try {
+			JEdjeScanner  scanner  = new JEdjeScanner(stream);
+			JEdjeParser   parser   = new JEdjeParser(scanner);
+			this.collection = parser.parseDocument();
+			this.loadEdjeGroup(_group);
+		} catch (IOException e) {
+			throw new JEdjeException("Unable to parse " + _edje + " edje file.");
+		}
 	}
-
+	
 	// Public --------------------------------------------------------
 
 	/**
@@ -139,10 +153,10 @@ public class JEdjeCanvas extends Canvas {
 			return;
 		}
 		
-		Font font = Font.getDefaultFont();
+		Font font = Font.getFont(Font.FACE_MONOSPACE, Font.STYLE_PLAIN, Font.SIZE_SMALL);
 		int  size = text.getSize();
 
-		int[] sizes = {Font.SIZE_SMALL, Font.SIZE_MEDIUM, Font.SIZE_LARGE};
+		int[] sizes = {Font.SIZE_MEDIUM, Font.SIZE_LARGE};
 		for (int i = 0; i < sizes.length; i++) {
 			Font f = Font.getFont(Font.FACE_MONOSPACE, Font.STYLE_PLAIN, sizes[i]);
 			if (f.getSize() > size) {

@@ -11,31 +11,20 @@
  */
 package br.org.cesar.jedje.javame.test;
 
-import java.io.InputStream;
-
 import javax.microedition.lcdui.Display;
 import javax.microedition.midlet.MIDlet;
 import javax.microedition.midlet.MIDletStateChangeException;
 
-import br.org.cesar.jedje.compiler.grammar.JEdjeCollection;
-import br.org.cesar.jedje.compiler.parser.JEdjeParser;
-import br.org.cesar.jedje.compiler.parser.JEdjeScanner;
 import br.org.cesar.jedje.javame.JEdjeCanvas;
 
 public class JEdjeTestMIDlet extends MIDlet {
 
 	private static JEdjeTestMIDlet instance;
-	
-	private JEdjeCollection collection; 
-	private JEdjeCanvas   canvas;
+	private JEdjeCanvas canvas;
 	
 	public JEdjeTestMIDlet() {
-		InputStream  stream  = this.getClass().getResourceAsStream("/test.edc");
 		try {
-			JEdjeScanner  scanner  = new JEdjeScanner(stream);
-			JEdjeParser   parser   = new JEdjeParser(scanner);
-			this.collection = parser.parseDocument();
-			this.canvas   = new JEdjeTestCanvas(collection, "menu");
+			this.canvas = new JEdjeTestCanvas("/test.edc", "menu");
 			this.canvas.setFullScreenMode(true);
 		} catch (Exception e) {
 			e.printStackTrace();

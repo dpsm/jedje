@@ -13,7 +13,7 @@ public class JEdjeTestCanvas extends JEdjeCanvas {
 
 	private int index = 0x03;
 	
-	public JEdjeTestCanvas(JEdjeCollection _edje, String _group)
+	public JEdjeTestCanvas(String _edje, String _group)
 			throws JEdjeException {
 		super(_edje, _group);
 		
