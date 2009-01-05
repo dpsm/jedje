@@ -24,7 +24,7 @@ public class JEdjeTestMIDlet extends MIDlet {
 	
 	public JEdjeTestMIDlet() {
 		try {
-			this.canvas = new JEdjeTestCanvas("/test.edc", "menu");
+			this.canvas = new JEdjeTestCanvas("/menu.edc", "menu");
 			this.canvas.setFullScreenMode(true);
 		} catch (Exception e) {
 			e.printStackTrace();

@@ -1,0 +1,344 @@
+images {
+	image, "/icon1.png" COMP;
+	image, "/icon1_selected.png" COMP;
+	image, "/icon2.png" COMP;
+	image, "/icon2_selected.png" COMP;
+	image, "/icon3.png" COMP;
+	image, "/icon3_selected.png" COMP;
+	image, "/icon4.png" COMP;
+	image, "/icon4_selected.png" COMP;
+	image, "/icon5.png" COMP;
+	image, "/icon5_selected.png" COMP;
+}
+
+collections {
+	group {
+		name, "menu";
+		parts {
+			part {
+				name, "rect1";
+				type, RECT;
+				description {
+					state, "default" 0.0;
+					color, 255 153 0 255;
+					rel1 {
+						relative, 0.0 0.0;
+						offset, 0 0;
+					}
+					rel2 {
+						relative, 1.0 1.0;
+						offset, 0 0;
+					}
+				}
+			}
+			part {
+				name, "rect2";
+				type, RECT;
+				description {
+					state, "default" 0.0;
+					color, 255 255 255 255;
+					rel1 {
+						relative, 0.0 0.0;
+						offset, 10 10;
+					}
+					rel2 {
+						relative, 1.0 0.5;
+						offset, -10 -40;
+					}
+				}
+			}
+			
+			part {
+				name, "rect3";
+				type, RECT;
+				description {
+					state, "default" 0.0;
+					color, 255 255 255 255;
+					rel1 {
+						relative, 0.0 0.5;
+						offset, +10 +40;
+					}
+					rel2 {
+						relative, 1.0 1.0;
+						offset, -10 -10;
+					}
+				}
+			}
+			part {
+				name, "icon3";
+				type, IMAGE;
+				description {
+					state, "common" 0.0;
+					align, 0.5 0.5;
+					rel1 {
+						relative, 0.5 0.5;
+						offset, 0 0;
+						to, "rect1";
+					}
+					rel2 {
+						relative, 0.5 0.5;
+						offset, 0 0;
+						to, "rect1";
+					}
+					image {
+						normal, "/icon3.png";
+					}
+				}
+				description {
+					state, "pos1" 0.0;
+					inherit, "common" 0.0;
+					rel1 {
+						relative, 0.5 0.5;
+						offset, +144 0;
+						to, "rect1";
+					}
+				}
+				description {
+					state, "pos2" 0.0;
+					inherit, "common" 0.0;
+					rel1 {
+						relative, 0.5 0.5;
+						offset, +72 0;
+						to, "rect1";
+					}
+				}
+				description {
+					state, "pos3" 0.0;
+					inherit, "common" 0.0;
+					rel1 {
+						relative, 0.5 0.5;
+						offset, 0 0;
+						to, "rect1";
+					}
+				}
+				description {
+					state, "pos4" 0.0;
+					inherit, "common" 0.0;
+					rel1 {
+						relative, 0.5 0.5;
+						offset, -72 0;
+						to, "rect1";
+					}
+				}
+				description {
+					state, "pos5" 0.0;
+					inherit, "common" 0.0;
+					rel1 {
+						relative, 0.5 0.5;
+						offset, -144 0;
+						to, "rect1";
+					}
+				}
+				description {
+					state, "selected" 0.0;
+					inherit, "pos3"  0.0;
+					image {
+						normal, "/icon3_selected.png";
+					}
+				}
+				description {
+					state, "default" 0.0;
+					inherit, "pos3"  0.0;
+				}
+			}
+			part {
+				name, "icon2";
+				type, IMAGE;
+				description {
+					state, "default" 0.0;
+					align, 0.5 0.5;
+					rel1 {
+						relative, 0.0 0.0;
+						offset, -72 0;
+						to, "icon3";
+					}
+					rel2 {
+						relative, 0.0 0.0;
+						offset, 0 0;
+						to, "icon3";
+					}
+					image {
+						normal, "/icon2.png";
+					}
+				}
+				description {
+					state, "selected" 0.0;
+					inherit, "default" 0.0;
+					image {
+						normal, "/icon2_selected.png";
+					}
+				}
+			}
+			part {
+				name, "icon1";
+				type, IMAGE;
+				description {
+					state, "default" 0.0;
+					align, 0.5 0.5;
+					rel1 {
+						relative, 0.0 0.0;
+						offset, -72 0;
+						to, "icon2";
+					}
+					rel2 {
+						relative, 0.0 0.0;
+						offset, 0 0;
+						to, "icon2";
+					}
+					image {
+						normal, "/icon1.png";
+					}
+				}
+				description {
+					state, "selected" 0.0;
+					inherit, "default" 0.0;
+					image {
+						normal, "/icon1_selected.png";
+					}
+				}
+			}
+			part {
+				name, "icon4";
+				type, IMAGE;
+				description {
+					state, "default" 0.0;
+					align, 0.5 0.5;
+					rel1 {
+						relative, 0.0 0.0;
+						offset, +72 0;
+						to, "icon3";
+					}
+					rel2 {
+						relative, 0.0 0.0;
+						offset, 0 0;
+						to, "icon3";
+					}
+					image {
+						normal, "/icon4.png";
+					}
+				}
+				description {
+					state, "selected" 0.0;
+					inherit, "default" 0.0;
+					image {
+						normal, "/icon4_selected.png";
+					}
+				}
+			}
+			part {
+				name, "icon5";
+				type, IMAGE;
+				description {
+					state, "default" 0.0;
+					align, 0.5 0.5;
+					rel1 {
+						relative, 0.0 0.0;
+						offset, +72 0;
+						to, "icon4";
+					}
+					rel2 {
+						relative, 0.0 0.0;
+						offset, 0 0;
+						to, "icon4";
+					}
+					image {
+						normal, "/icon5.png";
+					}
+				}
+				description {
+					state, "selected" 0.0;
+					inherit, "default" 0.0;
+					image {
+						normal, "/icon5_selected.png";
+					}
+				}
+			}
+			part {
+				name, "title";
+				type, TEXT;
+				description {
+					state, "common" 0.0;
+					align, 0.5 0.5;
+					color, 0 0 0 255;
+					rel1 {
+						relative, 0.5 0.5;
+						offset, 0 0;
+						to, "rect2";
+					}
+					rel2 {
+						relative, 0.5 0.5;
+						offset, 0 0;
+						to, "rect2";
+					}
+				}
+				description {
+					state, "title1" 0.0;
+					inherit, "common" 0.0;
+					text {
+						text, "Option 1";
+						size, 20;
+					}
+				}
+				description {
+					state, "title2" 0.0;
+					inherit, "common" 0.0;
+					text {
+						text, "Option 2";
+						size, 20;
+					}
+				}
+				description {
+					state, "title3" 0.0;
+					inherit, "common" 0.0;
+					text {
+						text, "Option 3";
+						size,  20;
+					}
+				}
+				description {
+					state, "title4" 0.0;
+					inherit, "common" 0.0;
+					text {
+						text, "Option 4";
+						size, 20;
+					}
+				}
+				description {
+					state, "title5" 0.0;
+					inherit, "common" 0.0;
+					text {
+						text, "Option 5";
+						size, 20;
+					}
+				}
+				description {
+					state, "default" 0.0;
+					inherit, "title3" 0.0;
+				}
+			}
+			part {
+				name, "description";
+				type, TEXT;
+				description {
+					state, "default" 0.0;
+					align, 0.5 0.5;
+					color, 0 0 0 255;
+					rel1 {
+						relative, 0.5 0.5;
+						offset, 0 0;
+						to, "rect3";
+					}
+					rel2 {
+						relative, 0.5 0.5;
+						offset, 0 0;
+						to, "rect3";
+					}
+					text {
+						text, "This option does something....";
+						size, 30;
+					}
+				}
+			}
+		}
+	}
+}		

@@ -120,7 +120,9 @@ public class JEdjePart {
 	 * @param current the current to set
 	 */
 	public void setCurrent(JEdjeDescription current) {
-		this.current = current;
+		if (current != null) {			
+			this.current = current;
+		}
 	}
 	
 }

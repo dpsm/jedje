@@ -171,6 +171,9 @@ public class JEdjeDescription {
 	 * @return the text
 	 */
 	public JEdjeDescriptionText getText() {
+		if (this.text == null && this.inherit != null) {
+			return this.inherit.getText();
+		}
 		return text;
 	}
 

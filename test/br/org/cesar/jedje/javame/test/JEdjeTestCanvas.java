@@ -3,8 +3,8 @@ package br.org.cesar.jedje.javame.test;
 import javax.microedition.lcdui.Canvas;
 
 import br.org.cesar.jedje.JEdjeException;
-import br.org.cesar.jedje.compiler.grammar.JEdjeDescription;
 import br.org.cesar.jedje.compiler.grammar.JEdjeCollection;
+import br.org.cesar.jedje.compiler.grammar.JEdjeDescription;
 import br.org.cesar.jedje.compiler.grammar.JEdjeGroup;
 import br.org.cesar.jedje.compiler.grammar.JEdjePart;
 import br.org.cesar.jedje.javame.JEdjeCanvas;
@@ -22,7 +22,7 @@ public class JEdjeTestCanvas extends JEdjeCanvas {
 		JEdjePart 		 part	 	 = null;
 		
 		group = JEdjeCollection.getGroup(getDataCollection(), "menu");
-		part  = JEdjeCollection.getPart(group, "icon" + index);
+		part  = JEdjeCollection.getPart(group, "icon3");
 		if (part != null) {
 			description = JEdjeCollection.getDescription(part, "selected");
 			part.setCurrent(description);
@@ -38,12 +38,12 @@ public class JEdjeTestCanvas extends JEdjeCanvas {
 		
 		int action = getGameAction(keycode);
 		switch (action) {
-			case Canvas.UP:
+			case Canvas.LEFT:
 				if (index > 1) {					
 					index--;
 				}
 			break;
-			case Canvas.DOWN:
+			case Canvas.RIGHT:
 				if (index < 5) {					
 					index++;
 				}
@@ -52,15 +52,28 @@ public class JEdjeTestCanvas extends JEdjeCanvas {
 		
 		if (oldIndex != this.index) {
 			group = JEdjeCollection.getGroup(getDataCollection(), "menu");
+			
 			part  = JEdjeCollection.getPart(group, "icon" + oldIndex);
 			if (part != null) {
 				description = JEdjeCollection.getDescription(part, "default");
+				part.setCurrent(description);
+			}
+
+			part  = JEdjeCollection.getPart(group, "icon3");
+			if (part != null) {
+				description = JEdjeCollection.getDescription(part, "pos" + index);
 				part.setCurrent(description);
 			}
 			
 			part  = JEdjeCollection.getPart(group, "icon" + index);
 			if (part != null) {
 				description = JEdjeCollection.getDescription(part, "selected");
+				part.setCurrent(description);
+			}
+			
+			part  = JEdjeCollection.getPart(group, "title");
+			if (part != null) {
+				description = JEdjeCollection.getDescription(part, "title" + index);
 				part.setCurrent(description);
 			}
 			this.repaint();

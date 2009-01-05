@@ -328,15 +328,19 @@ public class JEdjeParser {
 
 	private int parseTextSize() throws IOException, JEdjeException {
 		current = this.scanner.scan();
+		if (current != JEdjeToken.COMMA) {
+			throw new JEdjeException("Expecting size, <integer>;");
+		}
 		
+		current = this.scanner.scan();
 		if (current.getType() != JEdjeToken.INTEGER) {
-			throw new JEdjeException("Expecting size <integer>;");
+			throw new JEdjeException("Expecting size, <integer>;");
 		}
 		int size = Integer.parseInt(current.getValue());
 		
 		current = this.scanner.scan();
 		if (current != JEdjeToken.SEMI_COLLON) {
-			throw new JEdjeException("Expecting size <integer>;");
+			throw new JEdjeException("Expecting size, <integer>;");
 		}
 		current = this.scanner.scan();
 		return size;
