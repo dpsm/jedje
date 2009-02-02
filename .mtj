@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <mtjMetadata jad="JEdje.jad" version="0.9.1.qualifier">
-   <device group="MOTODEV SDK for Java(TM) ME" name="MOTOROKR_Z6"/>
+   <device group="MOTODEV SDK for Java(TM) ME" name="MOTOMING_A1200_A1200e_i_r"/>
    <signing signProject="false"/>
    <configurations>
-      <configuration active="true" name="MOTOROKR_Z6">
+      <configuration active="false" name="MOTOROKR_Z6">
          <device group="MOTODEV SDK for Java(TM) ME" name="MOTOROKR_Z6"/>
          <symbolSet>
             <symbol name="MMAPI" value="1.1"/>
@@ -38,6 +38,25 @@
             <symbol name="JSR179" value="1.0"/>
             <symbol name="CLDC" value="1.1"/>
             <symbol name="JSR184" value="1.0"/>
+         </symbolSet>
+      </configuration>
+      <configuration active="true" name="MOTOMING_A1200_A1200e_i_r">
+         <device group="MOTODEV SDK for Java(TM) ME" name="MOTOMING_A1200_A1200e_i_r"/>
+         <symbolSet>
+            <symbol name="MMAPI" value="1.1"/>
+            <symbol name="screen.isColor" value="true"/>
+            <symbol name="screen.height" value="320"/>
+            <symbol name="JSR75FILE" value="1.0"/>
+            <symbol name="JSR75PIM" value="1.0"/>
+            <symbol name="screen.width" value="240"/>
+            <symbol name="MIDP" value="2.0"/>
+            <symbol name="screen.isTouch" value="true"/>
+            <symbol name="JSR82" value="1.0"/>
+            <symbol name="screen.bitDepth" value="18"/>
+            <symbol name="CLDC" value="1.1"/>
+            <symbol name="WMA" value="2.0"/>
+            <symbol name="JSR184" value="1.0"/>
+            <symbol name="JSR172" value="1.0"/>
          </symbolSet>
       </configuration>
    </configurations>

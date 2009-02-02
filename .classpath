@@ -3,7 +3,7 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="res"/>
 	<classpathentry kind="src" path="test"/>
-	<classpathentry kind="con" path="org.elipse.mtj.JavaMEContainer/MOTODEV SDK for Java(TM) ME/MOTOROKR_Z6"/>
+	<classpathentry kind="con" path="org.elipse.mtj.JavaMEContainer/MOTODEV SDK for Java(TM) ME/MOTOMING_A1200_A1200e_i_r"/>
 	<classpathentry exported="true" kind="con" path="org.eclipse.mtj.core.library.MIDLET_LIBRARY/JMUnit for CLDC 1.1"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

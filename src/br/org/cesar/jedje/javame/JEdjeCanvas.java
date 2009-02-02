@@ -13,6 +13,7 @@ package br.org.cesar.jedje.javame;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Vector;
 
 import javax.microedition.lcdui.Canvas;
 import javax.microedition.lcdui.Font;
@@ -49,6 +50,7 @@ public class JEdjeCanvas extends Canvas {
 	
 	private JEdjeCollection collection;
 	private JEdjeGroup 	  	group;
+	private Vector			stack;
 	
 	// Static --------------------------------------------------------
     
@@ -68,6 +70,7 @@ public class JEdjeCanvas extends Canvas {
 		} catch (IOException e) {
 			throw new JEdjeException("Unable to parse " + _edje + " edje file.");
 		}
+		this.stack = new Vector();
 	}
 	
 	// Public --------------------------------------------------------
@@ -93,8 +96,11 @@ public class JEdjeCanvas extends Canvas {
 		int color = g.getColor();
 		Font font = g.getFont();
 		
+		this.stack.removeAllElements();
 		for (int i = 0; i < parts.length; i++) {
-			this.drawPart(g, parts[i]);
+			JEdjeCanvasObject object = new JEdjeCanvasObject(parts[i]);
+			this.drawPart(g, object);
+			this.stack.addElement(object);
 			g.setColor(color);
 			g.setFont(font);
 		}
@@ -105,7 +111,68 @@ public class JEdjeCanvas extends Canvas {
 		
 	}
 
+	/* (non-Javadoc)
+	 * @see javax.microedition.lcdui.Canvas#pointerPressed(int, int)
+	 */
+	protected void pointerPressed(int x, int y) {
+		JEdjeCanvasObject obj = getSource(x, y);
+		if (obj != null) {
+			this.pointerPressedEvent(obj.getPart(), x - obj.getX(), y - obj.getY());
+		} else {			
+			super.pointerPressed(x, y);
+		}
+	}
+
+	/**
+	 * Called when a pointer press event occurs on the part.
+	 * 
+	 * @param part source part.
+	 * @param x relative to part position.
+	 * @param y relative to part position.
+	 */
+	protected void pointerPressedEvent(JEdjePart part, int x, int y) {
+		
+	}
+
+	/* (non-Javadoc)
+	 * @see javax.microedition.lcdui.Canvas#pointerReleased(int, int)
+	 */
+	protected void pointerReleased(int x, int y) {
+		JEdjeCanvasObject obj = getSource(x, y);
+		if (obj != null) {
+			this.pointerReleasedEvent(obj.getPart(), x - obj.getX(), y - obj.getY());
+		} else {			
+			super.pointerReleased(x, y);
+		}
+	}
+
+	/**
+	 * Called when a pointer release event occurs on the part.
+	 * 
+	 * @param part source part.
+	 * @param x relative to part position.
+	 * @param y relative to part position.
+	 */
+	protected void pointerReleasedEvent(JEdjePart part, int x, int y) {
+		
+	}
+	
 	// Private -------------------------------------------------------
+	
+	private JEdjeCanvasObject getSource(int x, int y) {
+		JEdjeCanvasObject target = null;
+		int size = this.stack.size();
+		for (int i = size - 1; i >= 0x00; i--) {
+			JEdjeCanvasObject obj = (JEdjeCanvasObject) this.stack.elementAt(i);
+			if (x >= obj.getX() && x <= obj.getX() + obj.getWidth()&&
+				y >= obj.getY() && y <= obj.getY() + obj.getHeight()) {
+				target = obj;
+				break;
+			}
+		}
+		
+		return target;
+	}
 	
 	private void loadEdjeGroup(String name) throws JEdjeException {
 		JEdjeGroup[] groups = this.collection.getGroups();
@@ -122,8 +189,9 @@ public class JEdjeCanvas extends Canvas {
 		}
 	}
 	
-	private void drawPart(Graphics g, JEdjePart edjePart) {
-		JEdjeDescription current = edjePart.getCurrent();
+	private void drawPart(Graphics g, JEdjeCanvasObject object) {
+		JEdjePart part = object.getPart();
+		JEdjeDescription current = part.getCurrent();
 		
 		if (current != null && current.isVisible()) {
 			JEdjeColor color = current.getColor();
@@ -133,21 +201,21 @@ public class JEdjeCanvas extends Canvas {
 			
 			JEdjeRel rel1 = current.getRel1();
 			JEdjeRel rel2 = current.getRel2();
-			switch (edjePart.getType()) {
+			switch (part.getType()) {
 				case JEdjePart.IMAGE:
-					drawImage(g, current, rel1, current.getAlign());
+					drawImage(g, object, current, rel1, current.getAlign());
 				break;
 				case JEdjePart.RECT:
-					drawRect(g, current, rel1, rel2, current.getAlign());
+					drawRect(g, object, current, rel1, rel2, current.getAlign());
 				break;
 				case JEdjePart.TEXT:
-					drawText(g, current, rel1, current.getAlign());
+					drawText(g, object, current, rel1, current.getAlign());
 				break;
 			}
 		}
 	}
 
-	private void drawText(Graphics g, JEdjeDescription current, JEdjeRel rel1, JEdjeTuple align) {
+	private void drawText(Graphics g, JEdjeCanvasObject object, JEdjeDescription current, JEdjeRel rel1, JEdjeTuple align) {
 		JEdjeDescriptionText text = current.getText();
 		if (text == null) {
 			return;
@@ -184,10 +252,14 @@ public class JEdjeCanvas extends Canvas {
 			coords1[1] -= font.getSize() * vAlign;
 		}
 		
-		g.drawString(text.getValue(), coords1[0], coords1[1], 0x00);
+		object.setX(coords1[0]);
+		object.setY(coords1[1]);
+		object.setWidth(font.stringWidth(text.getValue()));
+		object.setHeight(font.getSize());
+		g.drawString(text.getValue(), object.getX(), object.getY(), 0x00);
 	}
 
-	private void drawImage(Graphics g, JEdjeDescription current, JEdjeRel rel1, JEdjeTuple align) {
+	private void drawImage(Graphics g, JEdjeCanvasObject object, JEdjeDescription current, JEdjeRel rel1, JEdjeTuple align) {
 		JEdjeDescriptionImage image = current.getImage();
 		if (image == null) {
 			return;
@@ -207,14 +279,18 @@ public class JEdjeCanvas extends Canvas {
 					coords1[0] -= img.getWidth() * hAlign;
 					coords1[1] -= img.getHeight() * vAlign;
 				}
-				g.drawImage(img, coords1[0], coords1[1], 0);
+				object.setX(coords1[0]);
+				object.setY(coords1[1]);
+				object.setWidth(img.getWidth());
+				object.setHeight(img.getHeight());
+				g.drawImage(img, object.getX(), object.getY(), 0);
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
 		}
 	}
 
-	private void drawRect(Graphics g, JEdjeDescription current, JEdjeRel rel1, JEdjeRel rel2, JEdjeTuple align) {
+	private void drawRect(Graphics g, JEdjeCanvasObject object, JEdjeDescription current, JEdjeRel rel1, JEdjeRel rel2, JEdjeTuple align) {
 		if (rel1 == null) {
 			rel1 = new JEdjeRel(new JEdjeTuple(0, 0), new JEdjeTuple(0, 0), null, null, null);
 		}
@@ -235,9 +311,12 @@ public class JEdjeCanvas extends Canvas {
 			coords1[1] -= (coords2[1] - coords1[1]) * vAlign;
 			coords2[1] -= (coords2[1] - coords1[1]) * vAlign;
 		}
+		object.setX(coords1[0]);
+		object.setY(coords1[1]);
+		object.setWidth(coords2[0] - coords1[0]);
+		object.setHeight(coords2[1] - coords1[1]);
+		g.fillRect(object.getX(), object.getY(), object.getWidth(), object.getHeight());
 		
-		g.fillRect(coords1[0], coords1[1]
-               , coords2[0] - coords1[0], coords2[1] - coords1[1]);
 	}
 
 	private int[] parseRel(JEdjeRel rel) {

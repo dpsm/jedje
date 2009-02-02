@@ -29,11 +29,17 @@ public class JEdjeTestCanvas extends JEdjeCanvas {
 		}
 	}
 	
+	/* (non-Javadoc)
+	 * @see br.org.cesar.jedje.javame.JEdjeCanvas#pointerReleasedEvent(br.org.cesar.jedje.compiler.grammar.JEdjePart, int, int)
+	 */
+	protected void pointerReleasedEvent(JEdjePart part, int x, int y) {
+		String name  = part.getName();
+		int oldIndex = this.index;
+		this.index 	 = Integer.parseInt(String.valueOf(name.charAt(name.length() - 1)));
+		event(oldIndex, index);
+	}
+
 	protected void keyReleased(int keycode) {
-		JEdjeDescription description = null;
-		JEdjeGroup		 group		 = null;
-		JEdjePart 		 part	 	 = null;
-		
 		int oldIndex = this.index;
 		
 		int action = getGameAction(keycode);
@@ -49,6 +55,14 @@ public class JEdjeTestCanvas extends JEdjeCanvas {
 				}
 			break;
 		}
+		
+		event(oldIndex, index);
+	}
+
+	private void event(int oldIndex, int index2) {
+		JEdjeDescription description = null;
+		JEdjeGroup		 group		 = null;
+		JEdjePart 		 part	 	 = null;
 		
 		if (oldIndex != this.index) {
 			group = JEdjeCollection.getGroup(getDataCollection(), "menu");
